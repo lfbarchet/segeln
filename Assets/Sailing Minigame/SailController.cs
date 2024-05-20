@@ -31,6 +31,11 @@ public class SailController : MonoBehaviour
         gauge = CalculateGauge(speed);
     }
 
+    void OnDestroy()
+    {
+        StopCoroutine(coroutine);
+    }
+
 
     // Move the current gauge level slowly towards the target level
     private float CalculateGauge(float speed)
