@@ -389,7 +389,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2048331097, guid: 1d2a232409eb7194aaad11a71d483580, type: 3}
       propertyPath: host
-      value: 192.168.111.1
+      value: localhost
       objectReference: {fileID: 0}
     - target: {fileID: 2048331097, guid: 1d2a232409eb7194aaad11a71d483580, type: 3}
       propertyPath: connectedEvent.m_PersistentCalls.m_Calls.Array.size
