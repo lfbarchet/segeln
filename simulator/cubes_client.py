@@ -2,9 +2,7 @@
 import constants
 
 from paho.mqtt import client as mqtt_client
-import random
 import datetime
-import keyboard
 
 def connect_mqtt():
     print("Connecting to MQTT Broker with host: ", constants.broker, " and port: ", constants.port)
@@ -25,14 +23,14 @@ def connect_mqtt():
     return client
 
 
-def publishAppState(client, orientation):
+def publishAppState(client, cube):
     msg = {
         "$type": constants.app_type,
-        "orientation": str(orientation),
+        "orientation": str(cube.orientation),
         "appName": constants.app_name,
         "appVersion": constants.app_version,
         "processId": 6833,
-        "cubeId": constants.app_cube_id,
+        "cubeId": cube.id,
         "isRunning": "true",
         "volume": 0.0,
         "mqttConnected": "true",
@@ -41,4 +39,3 @@ def publishAppState(client, orientation):
 
     print("Publishing message: ", msg)
     client.publish(constants.topic, str(msg))
-

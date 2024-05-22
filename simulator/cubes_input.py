@@ -2,12 +2,13 @@
 from pynput.keyboard import Key, KeyCode,Listener
 
 class Cube:
-    def __init__(self, left, right):
+    def __init__(self, id, left, right):
         self.orientation = 0
+        self.id = id
         self.left = left
         self.right = right
 
-    def process_input(self, key: Key | KeyCode, onOrientationChange):
+    def process_input(self, key: Key | KeyCode, onChange):
         if type(key) != KeyCode:
             return
         
@@ -28,10 +29,14 @@ class Cube:
                 self.orientation = -360 + self.orientation
             
             print("Orientation: ", self.orientation)
-            #onOrientationChange(self.orientation)
+            onChange(cube=self)
 
 
 
-def listen_for_input(cubeInput, onOrientationChange):
-    with Listener(on_press = lambda key: cubeInput.process_input(key, onOrientationChange) ) as listener:   
+def listen_for_input(cubes: list, onChange):
+    def on_key_press(key):
+        for cube in cubes:
+            cube.process_input(key, onChange)
+
+    with Listener(on_press = on_key_press ) as listener:   
         listener.join()
