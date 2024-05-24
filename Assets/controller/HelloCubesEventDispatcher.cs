@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using PuzzleCubes.Communication;
 using PuzzleCubes.Controller;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 
 public class HelloCubesEventDispatcher : EventDispatcher
 {
@@ -12,17 +13,22 @@ public class HelloCubesEventDispatcher : EventDispatcher
 
    public const string helloCubesRequestTopic =  "puzzleCubes/app/helloCubes";                          // from server 
    public string helloCubesResponseTopic(string cubeId) =>  $"puzzleCubes/{cubeId}/app/helloCubes";                 // to server
+   public string rotationTopic = "puzzleCubes/DESKTOP-7I21F8H/app/state";
+
+   public GameObject objectToRotate;
 
     
 
     protected override void Initialize()
     {
         base.Initialize();
+        objectToRotate = GameObject.Find("zeiger");
 
       
 
 
         subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(helloCubesRequestTopic).Build() ,HandleHelloCubes);
+        subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(rotationTopic).Build() ,HandleRotationMessage);
     }
 
     // SAMPLE HANDLER FOR MQTT MESSAGE
@@ -30,6 +36,24 @@ public class HelloCubesEventDispatcher : EventDispatcher
          var data = System.Text.Encoding.UTF8.GetString(msg.Payload);
         var result = JsonConvert.DeserializeObject<HelloCubes>(data);
         helloCubesEvent.Invoke( result);
+    }
+
+    private void HandleRotationMessage(MqttApplicationMessage message, object obj)
+    {
+        try
+        {
+            string payload = System.Text.Encoding.UTF8.GetString(message.Payload);
+            JObject json = JObject.Parse(payload);
+            float rotationValue = json["orientation"].Value<float>();
+            
+            rotationValue = Mathf.Clamp(rotationValue, 0, 360);
+            objectToRotate.transform.rotation = Quaternion.Euler(0, rotationValue, 0);
+            Debug.Log("Rotated object to " + rotationValue + " degrees.");
+        }
+        catch 
+        {
+            Debug.LogError("Failed to process rotation message: ");
+        }
     }
 
 
