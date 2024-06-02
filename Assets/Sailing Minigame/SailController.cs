@@ -19,6 +19,9 @@ public class SailController : MonoBehaviour
     public int targetChangeDelay = 3;
     public float speed = 0.0001f;
     public int updateSpeed = 1;
+    // Threshold in which the ship still maintains speed
+    public float gaugeThreshold = 0.3f;
+    public float currentShipSpeed = 0;
 
     private List<IEnumerator> coroutines;
     private float lastGauge;
@@ -54,6 +57,8 @@ public class SailController : MonoBehaviour
         // sail.transform.position = new Vector3(0, 4+(level*3), 0);
         sail.transform.rotation = sailStartRotation * Quaternion.AngleAxis((sailStartRotation.y -30) + (60*level), Vector3.forward);
         gaugeIndicator.transform.position = new Vector3((gaugeStartPosition.x-5) + (10*gauge), gaugeStartPosition.y, gaugeStartPosition.z);
+
+        CalculateCurrentSpeed();
     }
 
     void OnDestroy()
@@ -62,6 +67,14 @@ public class SailController : MonoBehaviour
             StopCoroutine(coroutine);
     }
 
+    private void CalculateCurrentSpeed()
+    {
+        float levelToGaugeDiff = Mathf.Abs(gauge-level);
+
+        currentShipSpeed = 1 - (levelToGaugeDiff/gaugeThreshold);
+        if(currentShipSpeed < 0)
+            currentShipSpeed = 0;
+    }
 
     // Move the current gauge level slowly towards the target level
     private float CalculateGauge(float speed)
