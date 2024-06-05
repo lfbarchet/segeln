@@ -31,10 +31,10 @@ public class RouteDistance : MonoBehaviour
         }
 
         // vorübergehende Beispielausgaben, wenn man zu weit von der Route abweicht
-        if (smallestDistance > 100) {
+        if (smallestDistance > 50) {
             Debug.Log("GameOver");
         }
-        else if (smallestDistance > 50) {
+        else if (smallestDistance > 20) {
             Debug.Log("Du hast dich zu weit von der Route entfernt. Drehe um!");
         }
        
