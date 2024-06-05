@@ -10,13 +10,15 @@ using PuzzleCubes.Models;
 public class SegelnEventDispatcher : EventDispatcher
 {
 
-    private const string segelnNavigationStateTopic = "segeln/app/navigation";                          // from server
+    private const string segelnNavigationStateTopic = "segeln/app/navigation";   
+    public GameObject objectToRotate;                       // from server
 
 
 
     protected override void Initialize()
     {
         base.Initialize();
+        objectToRotate = GameObject.Find("World");
 
 
         subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(segelnNavigationStateTopic).Build(), HandleSegelnNavigationState);
@@ -27,7 +29,12 @@ public class SegelnEventDispatcher : EventDispatcher
         var data = System.Text.Encoding.UTF8.GetString(msg.Payload);
         var result = JsonConvert.DeserializeObject<NavigationState>(data);
         Debug.Log("HandleSegelnNavigationState");
+        Debug.Log(result);
+        Debug.Log("objekt:");
+        Debug.Log(objectToRotate);
+        Debug.Log(result.Orientation);
         // Debug.Log($"Orientation: {result.Orientation}, Speed: {result.Speed}, Position: {result.Position}");
+        objectToRotate.transform.rotation = Quaternion.Euler(0, result.Orientation, 0);
 
 
         var newState = new NavigationState
@@ -37,7 +44,7 @@ public class SegelnEventDispatcher : EventDispatcher
             Position = result.Position
         };
 
-        NavigationStateChangedEvent.Instance.Invoke(newState);
+        //NavigationStateChangedEvent.Instance.Invoke(newState);
     }
 
 }
