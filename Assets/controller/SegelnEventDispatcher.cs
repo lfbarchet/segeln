@@ -44,7 +44,7 @@ public class SegelnEventDispatcher : EventDispatcher
             Position = result.Position
         };
 
-        //NavigationStateChangedEvent.Instance.Invoke(newState);
+        NavigationStateChangedEvent.Instance.Invoke(newState);
     }
 
 }
