@@ -16,10 +16,10 @@ public class CubesSimulator : MonoBehaviour
 
 
     float timer = 0;
-    float interval = 0.025f; // 25 milliseconds
+    readonly float interval = 0.025f; // 25 milliseconds
 
-    float maxWheelSpeed = 1f;
-    float maxSailSpeed = .01f;
+    readonly float maxWheelSpeed = 1f;
+    readonly float maxSailSpeed = .01f;
 
     void Update()
     {
@@ -32,19 +32,19 @@ public class CubesSimulator : MonoBehaviour
 
             if (Input.GetKey(KeyCode.A))
             {
-                simulateWheelCube(true);
+                SimulateWheelCube(true);
             }
             else if (Input.GetKey(KeyCode.D))
             {
-                simulateWheelCube(false);
+                SimulateWheelCube(false);
             }
-            else if (Input.GetKey(KeyCode.F))
+            else if (Input.GetKey(KeyCode.W))
             {
-                simulateSailCube(true);
+                SimulateSailCube(true);
             }
-            else if (Input.GetKey(KeyCode.H))
+            else if (Input.GetKey(KeyCode.S))
             {
-                simulateSailCube(false);
+                SimulateSailCube(false);
             }
 
             timer = 0; // Reset the timer
@@ -52,35 +52,45 @@ public class CubesSimulator : MonoBehaviour
 
     }
 
-    private void simulateWheelCube(bool isLeft)
+    private void SimulateWheelCube(bool isLeft)
     {
 
         wheelCubeOrientation += (isLeft ? 1 : -1) * UnityEngine.Random.Range(0f, maxWheelSpeed);
 
-        if (wheelCubeOrientation >= 360)
+        // orientation is between -180 and 179
+        if (wheelCubeOrientation >= 180)
         {
-            wheelCubeOrientation = 0;
+            wheelCubeOrientation = -179;
+        }
+        else if (wheelCubeOrientation <= -180)
+        {
+            wheelCubeOrientation = 179;
         }
 
-        WheelState state = new WheelState
-        {
-            Orientation = wheelCubeOrientation,
-            Timestamp = DateTime.UtcNow
-        };
 
         if (GameManager.Instance.CubeRole == CubeRole.Wheel)
         {
             // Simulate ZeroMQ message (local message)
-            WheelService.Instance.HandleWheelStateChangeFromLocal(state);
+            (SegelnAppController.Instance as SegelnAppController).HandleCubeControl(new CubeControl
+            {
+                Orientation = wheelCubeOrientation,
+                Timestamp = DateTime.UtcNow
+            });
         }
         else
         {
             // Simulate and broadcast MQTT message (server message)
+            WheelState state = new WheelState
+            {
+                Orientation = wheelCubeOrientation,
+                Timestamp = DateTime.UtcNow
+            };
+
             SegelnEventDispatcher.Instance.DispatchWheelStateChangedEvent(state);
         }
     }
 
-    private void simulateSailCube(
+    private void SimulateSailCube(
         bool faster
     )
     {

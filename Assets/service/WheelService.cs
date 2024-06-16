@@ -23,8 +23,6 @@ public class WheelService : MonoBehaviour
         WheelState wheelState
     )
     {
-        wheelState.Timestamp = System.DateTime.UtcNow;
-
         WheelStateChangedEvent.Instance.Invoke(wheelState);
         SegelnEventDispatcher.Instance.DispatchWheelStateChangedEvent(wheelState);
     }
