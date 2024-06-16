@@ -6,10 +6,10 @@ using PuzzleCubes.Communication;
 using PuzzleCubes.Controller;
 using UnityEngine;
 using PuzzleCubes.Models;
+using System;
 
 public class SegelnEventDispatcher : EventDispatcher
 {
-
     private const string segelnNavigationStateTopic = "segeln/app/navigation";                          // from server
 
 
@@ -27,17 +27,9 @@ public class SegelnEventDispatcher : EventDispatcher
         var data = System.Text.Encoding.UTF8.GetString(msg.Payload);
         var result = JsonConvert.DeserializeObject<NavigationState>(data);
         Debug.Log("HandleSegelnNavigationState");
-        // Debug.Log($"Orientation: {result.Orientation}, Speed: {result.Speed}, Position: {result.Position}");
 
-
-        var newState = new NavigationState
-        {
-            Orientation = result.Orientation,
-            Speed = result.Speed,
-            Position = result.Position
-        };
-
-        NavigationStateChangedEvent.Instance.Invoke(newState);
+        WheelService.Instance.HandleWheelRawWheelData(result.Orientation);
     }
+
 
 }
