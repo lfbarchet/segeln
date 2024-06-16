@@ -11,25 +11,57 @@ public class CubesSimulator : MonoBehaviour
 {
     float wheelCubeOrientation = 0;
 
+
+    float timer = 0;
+    float interval = 0.025f; // 25 milliseconds
+
+    float speed = 1f;
+
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+
+
+        timer += Time.deltaTime;
+
+        if (timer >= interval)
         {
-            wheelCubeOrientation += UnityEngine.Random.Range(0f, .1f);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            wheelCubeOrientation -= UnityEngine.Random.Range(0f, .1f);
-        }
-        else
-        {
-            return;
+            timer = 0; // Reset the timer
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                wheelCubeOrientation += UnityEngine.Random.Range(0f, speed);
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                wheelCubeOrientation -= UnityEngine.Random.Range(0f, speed);
+            }
+            else
+            {
+                return;
+            }
+
+            if (wheelCubeOrientation >= 360)
+            {
+                wheelCubeOrientation = 0;
+            }
+
+
+            WheelState state = new WheelState
+            {
+                Orientation = wheelCubeOrientation
+            };
+
+            if (GameManager.Instance.cubeRole == CubeRole.Wheel)
+            {
+                // Simulate ZeroMQ message (local message)
+                WheelService.Instance.HandleWheelStateChangeFromLocal(state);
+            }
+            else
+            {
+                // Simulate and broadcast MQTT message (server message)
+                SegelnEventDispatcher.Instance.DispatchWheelStateChangedEvent(state);
+            }
         }
 
-        if (wheelCubeOrientation >= 360)
-        {
-            wheelCubeOrientation = 0;
-        }
-        WheelService.Instance.HandleWheelRawWheelData(wheelCubeOrientation);
     }
 }

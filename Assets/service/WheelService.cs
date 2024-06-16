@@ -19,17 +19,25 @@ public class WheelService : MonoBehaviour
         }
     }
 
-    public void HandleWheelRawWheelData(
-        float orientation
+    public void HandleWheelStateChangeFromLocal(
+        WheelState wheelState
     )
     {
+        WheelStateChangedEvent.Instance.Invoke(wheelState);
+        SegelnEventDispatcher.Instance.DispatchWheelStateChangedEvent(wheelState);
+    }
 
-        var newState = new WheelState
+
+    public void HandleWheelStateChangeFromServer(
+            WheelState wheelState
+        )
+    {
+        if (GameManager.Instance.cubeRole == CubeRole.Wheel)
         {
-            Orientation = orientation
+            print("Skip HandleWheelStateChangeFromServer, because this is the wheel cube");
+            return;
+        }
 
-        };
-
-        WheelStateChangedEvent.Instance.Invoke(newState);
+        WheelStateChangedEvent.Instance.Invoke(wheelState);
     }
 }

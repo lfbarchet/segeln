@@ -10,26 +10,44 @@ using System;
 
 public class SegelnEventDispatcher : EventDispatcher
 {
-    private const string segelnNavigationStateTopic = "segeln/app/navigation";                          // from server
+    private const string wheelStateTopic = "segeln/app/wheel";
 
-
+    public static SegelnEventDispatcher Instance;
 
     protected override void Initialize()
     {
+        Instance = this;
         base.Initialize();
 
 
-        subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(segelnNavigationStateTopic).Build(), HandleSegelnNavigationState);
-        Debug.Log($"Subscribed to {segelnNavigationStateTopic}");
+        subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(wheelStateTopic).Build(), HandleWheelStateChangedEvent);
+        Debug.Log($"Subscribed to {wheelStateTopic}");
     }
-    public void HandleSegelnNavigationState(MqttApplicationMessage msg, IList<string> wildcardItem)
+    public void HandleWheelStateChangedEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
     {
         var data = System.Text.Encoding.UTF8.GetString(msg.Payload);
-        var result = JsonConvert.DeserializeObject<NavigationState>(data);
-        Debug.Log("HandleSegelnNavigationState");
-
-        WheelService.Instance.HandleWheelRawWheelData(result.Orientation);
+        var result = JsonConvert.DeserializeObject<WheelState>(data);
+        Debug.Log("HandleWheelStateChangedEvent");
+        WheelService.Instance.HandleWheelStateChangeFromServer(result);
     }
 
 
+    public void DispatchWheelStateChangedEvent(WheelState state)
+    {
+        var json = JsonConvert.SerializeObject(state, Formatting.Indented, new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Objects
+        });
+
+        var msg = new MqttApplicationMessage
+        {
+            Topic = wheelStateTopic,
+            Payload = System.Text.Encoding.UTF8.GetBytes(json),
+            MessageExpiryInterval = 3600
+        };
+
+
+        mqttCommunication.Send(msg);
+    }
 }
