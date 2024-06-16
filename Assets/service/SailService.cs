@@ -23,6 +23,8 @@ public class SailService : MonoBehaviour
         SailState sailState
     )
     {
+        sailState.Timestamp = System.DateTime.UtcNow;
+
         SailStateChangedEvent.Instance.Invoke(sailState);
         SegelnEventDispatcher.Instance.DispatchSailStateChangedEvent(sailState);
     }

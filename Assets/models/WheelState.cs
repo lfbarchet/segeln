@@ -9,8 +9,8 @@ using UnityEngine.Events;
 public class WheelState
 {
     private float orientation;
-    private float time;
+    private DateTime timestamp;
 
     public float Orientation { get => orientation; set => orientation = value; }
-    public float Time { get => time; set => time = value; }
+    public DateTime Timestamp { get => timestamp; set => timestamp = value; }
 }

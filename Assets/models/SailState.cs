@@ -9,8 +9,8 @@ using UnityEngine.Events;
 public class SailState
 {
     private float speed;
-    private float time;
+    private DateTime timestamp;
 
     public float Speed { get => speed; set => speed = value; }
-    public float Time { get => time; set => time = value; }
+    public DateTime Timestamp { get => timestamp; set => timestamp = value; }
 }

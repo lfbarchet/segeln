@@ -52,6 +52,7 @@ public class SegelnEventDispatcher : EventDispatcher
     {
         var data = System.Text.Encoding.UTF8.GetString(msg.Payload);
         var result = JsonConvert.DeserializeObject<T>(data);
+
         action(result);
     }
 

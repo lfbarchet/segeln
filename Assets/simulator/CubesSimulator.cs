@@ -64,7 +64,8 @@ public class CubesSimulator : MonoBehaviour
 
         WheelState state = new WheelState
         {
-            Orientation = wheelCubeOrientation
+            Orientation = wheelCubeOrientation,
+            Timestamp = DateTime.UtcNow
         };
 
         if (GameManager.Instance.cubeRole == CubeRole.Wheel)
@@ -87,7 +88,8 @@ public class CubesSimulator : MonoBehaviour
 
         SailState state = new SailState
         {
-            Speed = sailCubeSpeed
+            Speed = sailCubeSpeed,
+            Timestamp = DateTime.UtcNow
         };
 
         if (GameManager.Instance.cubeRole == CubeRole.Sail)

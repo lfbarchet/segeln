@@ -22,7 +22,7 @@ class ShipMovementController : MonoBehaviour
 
     private void OnWheelStateChanged(WheelState state)
     {
-        Debug.Log($"Orientation: {state.Orientation}, Time: {state.Time}");
+        Debug.Log($"Orientation: {state.Orientation}, Time: {state.Timestamp}");
 
         // orientation is between -180 and 179
         playerCube.rotation = Quaternion.Euler(0, -1 * state.Orientation, 0);
@@ -30,7 +30,7 @@ class ShipMovementController : MonoBehaviour
 
     private void OnSailStateChanged(SailState state)
     {
-        Debug.Log($"Speed: {state.Speed}, Time: {state.Time}");
+        Debug.Log($"Speed: {state.Speed}, Time: {state.Timestamp}");
 
         // speed is between 0 and 1
         Vector3 forceDirection = playerCube.forward * state.Speed;
