@@ -34,7 +34,7 @@ public class SailService : MonoBehaviour
             SailState sailState
         )
     {
-        if (GameManager.Instance.cubeRole == CubeRole.Sail)
+        if (GameManager.Instance.CubeRole == CubeRole.Sail)
         {
             print("Skip HandleSailStateChangeFromServer, because this is the Sail cube");
             return;

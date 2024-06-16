@@ -34,7 +34,7 @@ public class WheelService : MonoBehaviour
             WheelState wheelState
         )
     {
-        if (GameManager.Instance.cubeRole == CubeRole.Wheel)
+        if (GameManager.Instance.CubeRole == CubeRole.Wheel)
         {
             print("Skip HandleWheelStateChangeFromServer, because this is the wheel cube");
             return;

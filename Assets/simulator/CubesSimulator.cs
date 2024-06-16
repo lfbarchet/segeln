@@ -68,7 +68,7 @@ public class CubesSimulator : MonoBehaviour
             Timestamp = DateTime.UtcNow
         };
 
-        if (GameManager.Instance.cubeRole == CubeRole.Wheel)
+        if (GameManager.Instance.CubeRole == CubeRole.Wheel)
         {
             // Simulate ZeroMQ message (local message)
             WheelService.Instance.HandleWheelStateChangeFromLocal(state);
@@ -92,7 +92,7 @@ public class CubesSimulator : MonoBehaviour
             Timestamp = DateTime.UtcNow
         };
 
-        if (GameManager.Instance.cubeRole == CubeRole.Sail)
+        if (GameManager.Instance.CubeRole == CubeRole.Sail)
         {
             // Simulate ZeroMQ message (local message)
             SailService.Instance.HandleSailStateChangeFromLocal(state);
