@@ -19,7 +19,7 @@ public class CubesSimulator : MonoBehaviour
     float interval = 0.025f; // 25 milliseconds
 
     float maxWheelSpeed = 1f;
-    float maxSailSpeed = .1f;
+    float maxSailSpeed = .01f;
 
     void Update()
     {

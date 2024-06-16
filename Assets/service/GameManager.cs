@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
-    public CubeRole cubeRole = CubeRole.Wheel;
+    public CubeRole cubeRole = CubeRole.Map;
 
     private void Awake()
     {
