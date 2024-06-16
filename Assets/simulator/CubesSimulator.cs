@@ -9,13 +9,17 @@ using UnityEngine.Events;
 
 public class CubesSimulator : MonoBehaviour
 {
-    float wheelCubeOrientation = 0;
+    [UnityEngine.SerializeField]
+    private float wheelCubeOrientation = 0;
+    [UnityEngine.SerializeField]
+    private float sailCubeSpeed = 0;
 
 
     float timer = 0;
     float interval = 0.025f; // 25 milliseconds
 
-    float speed = 1f;
+    float maxWheelSpeed = 1f;
+    float maxSailSpeed = .1f;
 
     void Update()
     {
@@ -25,43 +29,76 @@ public class CubesSimulator : MonoBehaviour
 
         if (timer >= interval)
         {
-            timer = 0; // Reset the timer
 
             if (Input.GetKey(KeyCode.A))
             {
-                wheelCubeOrientation += UnityEngine.Random.Range(0f, speed);
+                simulateWheelCube(true);
             }
             else if (Input.GetKey(KeyCode.D))
             {
-                wheelCubeOrientation -= UnityEngine.Random.Range(0f, speed);
+                simulateWheelCube(false);
             }
-            else
+            else if (Input.GetKey(KeyCode.F))
             {
-                return;
+                simulateSailCube(true);
+            }
+            else if (Input.GetKey(KeyCode.H))
+            {
+                simulateSailCube(false);
             }
 
-            if (wheelCubeOrientation >= 360)
-            {
-                wheelCubeOrientation = 0;
-            }
-
-
-            WheelState state = new WheelState
-            {
-                Orientation = wheelCubeOrientation
-            };
-
-            if (GameManager.Instance.cubeRole == CubeRole.Wheel)
-            {
-                // Simulate ZeroMQ message (local message)
-                WheelService.Instance.HandleWheelStateChangeFromLocal(state);
-            }
-            else
-            {
-                // Simulate and broadcast MQTT message (server message)
-                SegelnEventDispatcher.Instance.DispatchWheelStateChangedEvent(state);
-            }
+            timer = 0; // Reset the timer
         }
 
+    }
+
+    private void simulateWheelCube(bool isLeft)
+    {
+
+        wheelCubeOrientation += (isLeft ? 1 : -1) * UnityEngine.Random.Range(0f, maxWheelSpeed);
+
+        if (wheelCubeOrientation >= 360)
+        {
+            wheelCubeOrientation = 0;
+        }
+
+        WheelState state = new WheelState
+        {
+            Orientation = wheelCubeOrientation
+        };
+
+        if (GameManager.Instance.cubeRole == CubeRole.Wheel)
+        {
+            // Simulate ZeroMQ message (local message)
+            WheelService.Instance.HandleWheelStateChangeFromLocal(state);
+        }
+        else
+        {
+            // Simulate and broadcast MQTT message (server message)
+            SegelnEventDispatcher.Instance.DispatchWheelStateChangedEvent(state);
+        }
+    }
+
+    private void simulateSailCube(
+        bool faster
+    )
+    {
+        sailCubeSpeed += (faster ? 1 : -1) * UnityEngine.Random.Range(0f, maxSailSpeed);
+
+        SailState state = new SailState
+        {
+            Speed = sailCubeSpeed
+        };
+
+        if (GameManager.Instance.cubeRole == CubeRole.Sail)
+        {
+            // Simulate ZeroMQ message (local message)
+            SailService.Instance.HandleSailStateChangeFromLocal(state);
+        }
+        else
+        {
+            // Simulate and broadcast MQTT message (server message)
+            SegelnEventDispatcher.Instance.DispatchSailStateChangedEvent(state);
+        }
     }
 }
