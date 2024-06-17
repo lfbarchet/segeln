@@ -80,7 +80,7 @@ public class CubesSimulator : MonoBehaviour
         else
         {
             // Simulate and broadcast MQTT message (server message)
-            WheelState state = new WheelState
+            WheelState state = new()
             {
                 Orientation = wheelCubeOrientation,
                 Timestamp = DateTime.UtcNow
@@ -96,7 +96,7 @@ public class CubesSimulator : MonoBehaviour
     {
         sailCubeSpeed += (faster ? 1 : -1) * UnityEngine.Random.Range(0f, maxSailSpeed);
 
-        SailState state = new SailState
+        SailState state = new()
         {
             Speed = sailCubeSpeed,
             Timestamp = DateTime.UtcNow

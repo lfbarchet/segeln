@@ -23,9 +23,9 @@ public class SailService : MonoBehaviour
         SailState sailState
     )
     {
-        sailState.Timestamp = System.DateTime.UtcNow;
-
+        // local unity event
         SailStateChangedEvent.Instance.Invoke(sailState);
+        // publish to MQTT
         SegelnEventDispatcher.Instance.DispatchSailStateChangedEvent(sailState);
     }
 
@@ -40,6 +40,7 @@ public class SailService : MonoBehaviour
             return;
         }
 
+        // local unity event
         SailStateChangedEvent.Instance.Invoke(sailState);
     }
 }

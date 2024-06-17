@@ -46,8 +46,5 @@ class ShipMovementController : MonoBehaviour
         // speed is between 0 and 1
         Vector3 forceDirection = playerCube.forward * state.Speed;
         playerCube.GetComponent<Rigidbody>().AddForce(forceDirection, ForceMode.Impulse);
-
-
-
     }
 }

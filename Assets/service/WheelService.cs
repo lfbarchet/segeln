@@ -23,7 +23,9 @@ public class WheelService : MonoBehaviour
         WheelState wheelState
     )
     {
+        // local unity event
         WheelStateChangedEvent.Instance.Invoke(wheelState);
+        // publish to MQTT
         SegelnEventDispatcher.Instance.DispatchWheelStateChangedEvent(wheelState);
     }
 
@@ -38,6 +40,7 @@ public class WheelService : MonoBehaviour
             return;
         }
 
+        // local unity event
         WheelStateChangedEvent.Instance.Invoke(wheelState);
     }
 }
