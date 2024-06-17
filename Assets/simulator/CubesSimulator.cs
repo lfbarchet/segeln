@@ -50,6 +50,7 @@ public class CubesSimulator : MonoBehaviour
             timer = 0; // Reset the timer
         }
 
+        DetectCubeRoleChange();
     }
 
     private void SimulateWheelCube(bool isLeft)
@@ -111,6 +112,23 @@ public class CubesSimulator : MonoBehaviour
         {
             // Simulate and broadcast MQTT message (server message)
             SegelnEventDispatcher.Instance.DispatchSailStateChangedEvent(state);
+        }
+    }
+
+    private void DetectCubeRoleChange()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GameManager.Instance.SetCubeRole(CubeRole.Wheel);
+
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            GameManager.Instance.SetCubeRole(CubeRole.Sail);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            GameManager.Instance.SetCubeRole(CubeRole.Map);
         }
     }
 }
