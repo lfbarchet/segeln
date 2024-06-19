@@ -35,8 +35,10 @@ class ShipMovementController : MonoBehaviour
         // orientation is between -180 and 179
         playerCube.rotation = Quaternion.Euler(0, -1 * state.Orientation, 0);
 
-        float angleDiff = state.Orientation - wheelCube.localEulerAngles.z;
-        wheelCube.Rotate(Vector3.forward, angleDiff, Space.Self);
+        wheelCube.localEulerAngles = new Vector3(-state.Orientation, 90, -90);
+
+        // float angleDiff = state.Orientation - wheelCube.localEulerAngles.z;
+        // wheelCube.Rotate(Vector3.forward, angleDiff, Space.Self);
     }
 
     private void OnSailStateChanged(SailState state)
