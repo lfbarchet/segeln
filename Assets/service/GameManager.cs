@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     private Camera sailCamera;
     [SerializeField]
     private Camera wheelCamera;
+    [SerializeField]
+    private Camera mapCamera;
 
     private void Awake()
     {
@@ -50,12 +52,9 @@ public class GameManager : MonoBehaviour
 
     void DeactivateAllCameras()
     {
-        // Get all cameras in the scene
-        Camera[] cameras = FindObjectsOfType<Camera>();
-        foreach (Camera camera in cameras)
-        {
-            camera.enabled = false;
-        }
+        mapCamera.enabled = false;
+        sailCamera.enabled = false;
+        wheelCamera.enabled = false;
     }
 
     public void SetCubeRole(CubeRole cubeRole)
@@ -74,7 +73,8 @@ public class GameManager : MonoBehaviour
                 sailCamera.enabled = true;
                 break;
             case CubeRole.Map:
-                print("Map cube role camera is not implemented yet");
+                DeactivateAllCameras();
+                mapCamera.enabled = true;
                 break;
         }
     }
