@@ -7,11 +7,13 @@ using PuzzleCubes.Controller;
 using UnityEngine;
 using PuzzleCubes.Models;
 using System;
+using UnityEngine.SceneManagement;
 
 public class SegelnEventDispatcher : EventDispatcher
 {
     private const string wheelStateTopic = "segeln/app/wheel";
     private const string sailStateTopic = "segeln/app/sail";
+    private const string eventsTopic = "segeln/app/events";
 
     public static SegelnEventDispatcher Instance;
 
@@ -26,7 +28,17 @@ public class SegelnEventDispatcher : EventDispatcher
 
         subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(sailStateTopic).Build(), HandleSailStateChangedEvent);
         Debug.Log($"Subscribed to {sailStateTopic}");
+
+        subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(eventsTopic).Build(), HandleEventTriggeredEvent);
+        Debug.Log($"Subscribed to {eventsTopic}");
     }
+
+    public void HandleEventTriggeredEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
+    {
+        Debug.Log("jetzt wechseln");
+        
+    }
+    
     public void HandleWheelStateChangedEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
     {
         HandleEvent<WheelState>(msg, wildcardItem, WheelService.Instance.HandleWheelStateChangeFromServer);
