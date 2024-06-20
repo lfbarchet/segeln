@@ -20,6 +20,7 @@ class ShipMovementController : MonoBehaviour
 
 
     private CharacterController characterController;
+    private float baseRotation = 0.0f;
 
     private void OnEnable()
     {
@@ -37,6 +38,7 @@ class ShipMovementController : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
+        baseRotation = playerCube.rotation.eulerAngles.y;
     }
 
     private void FixedUpdate()
@@ -50,12 +52,9 @@ class ShipMovementController : MonoBehaviour
         Debug.Log($"Orientation: {state.Orientation}, Time: {state.Timestamp}");
 
         // orientation is between -180 and 179
-        playerCube.rotation = Quaternion.Euler(0, -1 * state.Orientation, 0);
+        playerCube.rotation = Quaternion.Euler(0, -1 * state.Orientation + baseRotation, 0);
 
         wheelCube.localEulerAngles = new Vector3(-state.Orientation, 90, -90);
-
-        // float angleDiff = state.Orientation - wheelCube.localEulerAngles.z;
-        // wheelCube.Rotate(Vector3.forward, angleDiff, Space.Self);
     }
 
     private void OnSailStateChanged(SailState state)
