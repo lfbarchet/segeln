@@ -12,32 +12,39 @@ public class RouteDistance : MonoBehaviour
     public float smallestDistance;
     public GameObject nearestPathStroke;
 
-    private void Start() {
-        foreach (Transform child in path) {
+    private void Start()
+    {
+        foreach (Transform child in path)
+        {
             pathStrokes.Add(child);
         }
     }
 
-    private void Update() {
+    private void Update()
+    {
         smallestDistance = float.MaxValue;
         nearestPathStroke = null;
 
-        foreach (Transform stroke in pathStrokes) {
+        foreach (Transform stroke in pathStrokes)
+        {
             float distance = Vector3.Distance(ship.position, stroke.position);
-            if (distance < smallestDistance) {
+            if (distance < smallestDistance)
+            {
                 smallestDistance = distance;
                 nearestPathStroke = stroke.gameObject;
             }
         }
 
-        // vorübergehende Beispielausgaben, wenn man zu weit von der Route abweicht
-        if (smallestDistance > 50) {
+        // vorï¿½bergehende Beispielausgaben, wenn man zu weit von der Route abweicht
+        if (smallestDistance > 150)
+        {
             Debug.Log("GameOver");
         }
-        else if (smallestDistance > 20) {
+        else if (smallestDistance > 100)
+        {
             Debug.Log("Du hast dich zu weit von der Route entfernt. Drehe um!");
         }
-       
+
 
         Debug.DrawLine(ship.position, nearestPathStroke.transform.position, Color.red);
     }

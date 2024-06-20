@@ -15,7 +15,11 @@ class ShipMovementController : MonoBehaviour
     [SerializeField]
     private float speed = 0.0f;
     [SerializeField]
-    private readonly float SPEED_MULTIPLIER = 25.0f;
+    private readonly float SPEED_MULTIPLIER = 50.0f;
+
+
+
+    private CharacterController characterController;
 
     private void OnEnable()
     {
@@ -29,9 +33,15 @@ class ShipMovementController : MonoBehaviour
         SailStateChangedEvent.Instance.RemoveListener(OnSailStateChanged);
     }
 
+
+    private void Awake()
+    {
+        characterController = GetComponent<CharacterController>();
+    }
+
     private void FixedUpdate()
     {
-        playerCube.position += speed * SPEED_MULTIPLIER * Time.fixedDeltaTime * playerCube.forward;
+        characterController.Move(playerCube.forward * speed * SPEED_MULTIPLIER * Time.deltaTime);
         sailCamera.transform.position = new Vector3(playerCube.position.x, sailCamera.transform.position.y, playerCube.position.z);
     }
 
