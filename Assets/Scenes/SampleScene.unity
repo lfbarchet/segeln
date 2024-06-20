@@ -523,8 +523,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: IngameDebugConsole
       objectReference: {fileID: 0}
-    - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
-      propertyPath: m_AnchorMax.x
+    - target: {fileID: 2048331097, guid: 1d2a232409eb7194aaad11a71d483580, type: 3}
+      propertyPath: host
+      value: localhost
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048331097, guid: 1d2a232409eb7194aaad11a71d483580, type: 3}
+      propertyPath: connectedEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048331097, guid: 1d2a232409eb7194aaad11a71d483580, type: 3}
+      propertyPath: connectedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
