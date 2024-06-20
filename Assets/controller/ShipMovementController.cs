@@ -11,6 +11,12 @@ class ShipMovementController : MonoBehaviour
 
     public Camera sailCamera;
 
+    [Header("Speed")]
+    [SerializeField]
+    private float speed = 0.0f;
+    [SerializeField]
+    private readonly float SPEED_MULTIPLIER = 25.0f;
+
     private void OnEnable()
     {
         WheelStateChangedEvent.Instance.AddListener(OnWheelStateChanged);
@@ -25,6 +31,7 @@ class ShipMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        playerCube.position += speed * SPEED_MULTIPLIER * Time.fixedDeltaTime * playerCube.forward;
         sailCamera.transform.position = new Vector3(playerCube.position.x, sailCamera.transform.position.y, playerCube.position.z);
     }
 
@@ -46,7 +53,8 @@ class ShipMovementController : MonoBehaviour
         Debug.Log($"Speed: {state.Speed}, Time: {state.Timestamp}");
 
         // speed is between 0 and 1
-        Vector3 forceDirection = playerCube.forward * state.Speed;
-        playerCube.GetComponent<Rigidbody>().AddForce(forceDirection, ForceMode.Impulse);
+        // Vector3 forceDirection = playerCube.forward * state.Speed;
+        // playerCube.GetComponent<Rigidbody>().AddForce(forceDirection, ForceMode.Impulse);
+        speed = state.Speed;
     }
 }
