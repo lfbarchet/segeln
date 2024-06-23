@@ -36,7 +36,7 @@ public class SegelnEventDispatcher : EventDispatcher
     public void HandleEventTriggeredEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
     {
         Debug.Log("jetzt wechseln");
-        
+        SceneManager.LoadScene("SampleScene");
     }
     
     public void HandleWheelStateChangedEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
