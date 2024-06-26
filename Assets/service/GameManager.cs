@@ -79,4 +79,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetGameSpeed(float speed)
+    {
+        Time.timeScale = speed;
+    }
+
 }

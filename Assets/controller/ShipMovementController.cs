@@ -25,12 +25,14 @@ class ShipMovementController : MonoBehaviour
     {
         WheelStateChangedEvent.Instance.AddListener(OnWheelStateChanged);
         SailStateChangedEvent.Instance.AddListener(OnSailStateChanged);
+        PerformanceEventStateChangedEvent.Instance.AddListener(OnPerformanceEventStateChanged);
     }
 
     private void OnDisable()
     {
         WheelStateChangedEvent.Instance.RemoveListener(OnWheelStateChanged);
         SailStateChangedEvent.Instance.RemoveListener(OnSailStateChanged);
+        PerformanceEventStateChangedEvent.Instance.RemoveListener(OnPerformanceEventStateChanged);
     }
 
 
@@ -61,5 +63,12 @@ class ShipMovementController : MonoBehaviour
         Debug.Log($"Speed: {state.Speed}, Time: {state.Timestamp}");
 
         speed = state.Speed;
+    }
+
+    private void OnPerformanceEventStateChanged(PerformanceEventState state)
+    {
+        Debug.Log($"Performance: {state.Type}, Value: {state.Value}, Time: {state.Timestamp}");
+
+        GameManager.Instance.SetGameSpeed(state.Value);
     }
 }

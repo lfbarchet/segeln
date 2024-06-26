@@ -13,6 +13,8 @@ public class SegelnEventDispatcher : EventDispatcher
     private const string wheelStateTopic = "segeln/app/wheel";
     private const string sailStateTopic = "segeln/app/sail";
 
+    private const string performanceEventTopic = "segeln/app/performance";
+
     public static SegelnEventDispatcher Instance;
 
     protected override void Initialize()
@@ -26,6 +28,9 @@ public class SegelnEventDispatcher : EventDispatcher
 
         subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(sailStateTopic).Build(), HandleSailStateChangedEvent);
         Debug.Log($"Subscribed to {sailStateTopic}");
+
+        subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(performanceEventTopic).Build(), HandlePerformanceEventStateChangedEvent);
+        Debug.Log($"Subscribed to {performanceEventTopic}");
     }
     public void HandleWheelStateChangedEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
     {
@@ -47,6 +52,18 @@ public class SegelnEventDispatcher : EventDispatcher
     {
         DispatchEvent(sailStateTopic, state);
     }
+
+    public void HandlePerformanceEventStateChangedEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
+    {
+        HandleEvent<PerformanceEventState>(msg, wildcardItem, PerformanceEventService.Instance.HandlePerformanceEventStateChangeFromServer);
+    }
+
+    public void DispatchPerformanceEventStateChangedEvent(PerformanceEventState state)
+    {
+        DispatchEvent(performanceEventTopic, state);
+    }
+
+    // generic methods
 
     private void HandleEvent<T>(MqttApplicationMessage msg, IList<string> wildcardItem, Action<T> action)
     {
