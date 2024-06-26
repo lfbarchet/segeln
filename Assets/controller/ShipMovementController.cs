@@ -14,7 +14,6 @@ class ShipMovementController : MonoBehaviour
     [Header("Speed")]
     [SerializeField]
     private float speed = 0.0f;
-    [SerializeField]
     private readonly float SPEED_MULTIPLIER = 50.0f;
 
 
@@ -43,7 +42,7 @@ class ShipMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        characterController.Move(playerCube.forward * speed * SPEED_MULTIPLIER * Time.deltaTime);
+        characterController.Move(speed * SPEED_MULTIPLIER * Time.deltaTime * playerCube.forward);
         sailCamera.transform.position = new Vector3(playerCube.position.x, sailCamera.transform.position.y, playerCube.position.z);
     }
 
@@ -61,9 +60,6 @@ class ShipMovementController : MonoBehaviour
     {
         Debug.Log($"Speed: {state.Speed}, Time: {state.Timestamp}");
 
-        // speed is between 0 and 1
-        // Vector3 forceDirection = playerCube.forward * state.Speed;
-        // playerCube.GetComponent<Rigidbody>().AddForce(forceDirection, ForceMode.Impulse);
         speed = state.Speed;
     }
 }
