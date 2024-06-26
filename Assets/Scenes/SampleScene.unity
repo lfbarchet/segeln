@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCube: {fileID: 407465637}
-  wheelCube: {fileID: 1398846729}
+  wheelCube: {fileID: 0}
   sailCamera: {fileID: 963194227}
   speed: 0
 --- !u!114 &407465640
@@ -1293,6 +1293,32 @@ MonoBehaviour:
   smallestDistance: 0
   nearestPathStroke: {fileID: 0}
   damageText: {fileID: 1115605129}
+--- !u!114 &407465641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407465636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf1b41536bf94f3f8914f78a3a4084d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sail: {fileID: 751980781}
+  ship: {fileID: 407465636}
+  level: 0.5
+  levelTarget: 0.5
+  gaugeIndicator: {fileID: 838800395}
+  gauge: 0.5
+  gaugeTarget: 0.5
+  targetChangeDelay: 3
+  speed: 0.0001
+  updateSpeed: 0.2
+  sailMovementSpeed: 0.0001
+  gaugeThreshold: 0.3
+  currentShipSpeed: 0
+  currentOrientation: 0
 --- !u!43 &459024970
 Mesh:
   m_ObjectHideFlags: 0
