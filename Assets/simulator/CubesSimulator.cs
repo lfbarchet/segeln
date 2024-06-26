@@ -9,8 +9,11 @@ using UnityEngine.Events;
 
 public class CubesSimulator : MonoBehaviour
 {
+    public SailController sailController;
     [UnityEngine.SerializeField]
     private float wheelCubeOrientation = 0;
+    [UnityEngine.SerializeField]
+    private float sailCubeOrientation = 0;
     [UnityEngine.SerializeField]
     private float sailCubeSpeed = 0;
 
@@ -19,7 +22,8 @@ public class CubesSimulator : MonoBehaviour
     readonly float interval = 0.025f; // 25 milliseconds
 
     readonly float maxWheelSpeed = 1f;
-    readonly float maxSailSpeed = .01f;
+    readonly float maxSailSpeed = 1f;
+    private Coroutine coroutine;
 
     void Update()
     {
@@ -91,27 +95,46 @@ public class CubesSimulator : MonoBehaviour
         }
     }
 
-    private void SimulateSailCube(
-        bool faster
-    )
+    private void SimulateSailCube(bool isUp)
     {
-        sailCubeSpeed += (faster ? 1 : -1) * UnityEngine.Random.Range(0f, maxSailSpeed);
+        sailCubeOrientation += (isUp ? 1 : -1) * maxSailSpeed;
 
-        SailState state = new()
+        // orientation is between -180 and 179
+        if (sailCubeOrientation >= 180)
         {
-            Speed = sailCubeSpeed,
-            Timestamp = DateTime.UtcNow
-        };
-
-        if (GameManager.Instance.CubeRole == CubeRole.Sail)
-        {
-            // Simulate ZeroMQ message (local message)
-            SailService.Instance.HandleSailStateChangeFromLocal(state);
+            sailCubeOrientation = -179;
         }
-        else
+        else if (sailCubeOrientation <= -180)
         {
-            // Simulate and broadcast MQTT message (server message)
-            SegelnEventDispatcher.Instance.DispatchSailStateChangedEvent(state);
+            sailCubeOrientation = 179;
+        }
+        sailController.HandleOrientation(sailCubeOrientation);
+        // sailCubeSpeed += (faster ? 1 : -1) * UnityEngine.Random.Range(0f, maxSailSpeed);
+    }
+
+    private IEnumerator SendShipSpeed(float interval)
+    {
+        while(true)
+        {
+            SailState state = new()
+            {
+                Speed = sailController.currentShipSpeed,
+                Timestamp = DateTime.UtcNow
+            };
+
+            if (GameManager.Instance.CubeRole == CubeRole.Sail)
+            {
+                // Simulate ZeroMQ message (local message)
+                SailService.Instance.HandleSailStateChangeFromLocal(state);
+            }
+            else
+            {
+                // Simulate and broadcast MQTT message (server message)
+                SegelnEventDispatcher.Instance.DispatchSailStateChangedEvent(state);
+            }
+
+
+            yield return new WaitForSeconds(interval);
         }
     }
 
@@ -120,15 +143,18 @@ public class CubesSimulator : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             GameManager.Instance.SetCubeRole(CubeRole.Wheel);
+            StopCoroutine(coroutine);
 
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             GameManager.Instance.SetCubeRole(CubeRole.Sail);
+            coroutine = StartCoroutine(SendShipSpeed(0.2f));
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             GameManager.Instance.SetCubeRole(CubeRole.Map);
+            StopCoroutine(coroutine);
         }
     }
 }
