@@ -14,7 +14,6 @@ class ShipMovementController : MonoBehaviour
     [Header("Speed")]
     [SerializeField]
     private float speed = 0.0f;
-    [SerializeField]
     private readonly float SPEED_MULTIPLIER = 50.0f;
 
 
@@ -26,12 +25,14 @@ class ShipMovementController : MonoBehaviour
     {
         WheelStateChangedEvent.Instance.AddListener(OnWheelStateChanged);
         SailStateChangedEvent.Instance.AddListener(OnSailStateChanged);
+        PerformanceEventStateChangedEvent.Instance.AddListener(OnPerformanceEventStateChanged);
     }
 
     private void OnDisable()
     {
         WheelStateChangedEvent.Instance.RemoveListener(OnWheelStateChanged);
         SailStateChangedEvent.Instance.RemoveListener(OnSailStateChanged);
+        PerformanceEventStateChangedEvent.Instance.RemoveListener(OnPerformanceEventStateChanged);
     }
 
 
@@ -61,9 +62,13 @@ class ShipMovementController : MonoBehaviour
     {
         Debug.Log($"Speed: {state.Speed}, Time: {state.Timestamp}");
 
-        // speed is between 0 and 1
-        // Vector3 forceDirection = playerCube.forward * state.Speed;
-        // playerCube.GetComponent<Rigidbody>().AddForce(forceDirection, ForceMode.Impulse);
         speed = state.Speed;
+    }
+
+    private void OnPerformanceEventStateChanged(PerformanceEventState state)
+    {
+        Debug.Log($"Performance: {state.Type}, Value: {state.Value}, Time: {state.Timestamp}");
+
+        GameManager.Instance.SetGameSpeed(state.Value);
     }
 }

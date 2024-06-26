@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using PuzzleCubes.Models;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,6 +25,8 @@ public class CubesSimulator : MonoBehaviour
     readonly float maxWheelSpeed = 1f;
     readonly float maxSailSpeed = 1f;
     private Coroutine coroutine;
+
+    private float gameSpeed = 1;
 
     void Update()
     {
@@ -55,6 +58,7 @@ public class CubesSimulator : MonoBehaviour
         }
 
         DetectCubeRoleChange();
+        DetectEventTrigger();
     }
 
     private void SimulateWheelCube(bool isLeft)
@@ -155,6 +159,23 @@ public class CubesSimulator : MonoBehaviour
         {
             GameManager.Instance.SetCubeRole(CubeRole.Map);
             StopCoroutine(coroutine);
+        }
+    }
+
+    private void DetectEventTrigger()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            gameSpeed = gameSpeed == 0.5f ? 0.25f : gameSpeed == 0.25f ? 1f : 0.5f;
+
+            PerformanceEventState state = new()
+            {
+                Type = PerformanceEventType.SLOW_DOWN,
+                Value = gameSpeed,
+                Timestamp = DateTime.UtcNow
+            };
+            SegelnEventDispatcher.Instance.DispatchPerformanceEventStateChangedEvent(state);
+
         }
     }
 }

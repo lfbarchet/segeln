@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class RouteDistance : MonoBehaviour
@@ -11,6 +12,18 @@ public class RouteDistance : MonoBehaviour
 
     public float smallestDistance;
     public GameObject nearestPathStroke;
+
+    public TextMeshProUGUI damageText;
+    private float damage = 0;
+    public float Damage
+    {
+        get => damage;
+        set
+        {
+            damage = value;
+            damageText.text = "Damage: " + damage;
+        }
+    }
 
     private void Start()
     {
@@ -43,9 +56,11 @@ public class RouteDistance : MonoBehaviour
         else if (smallestDistance > 100)
         {
             Debug.Log("Du hast dich zu weit von der Route entfernt. Drehe um!");
+            Damage += 0.1f;
         }
 
 
         Debug.DrawLine(ship.position, nearestPathStroke.transform.position, Color.red);
     }
+
 }
