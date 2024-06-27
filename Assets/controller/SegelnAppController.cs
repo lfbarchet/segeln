@@ -8,8 +8,6 @@ using UnityEngine;
 public class SegelnAppController : AppController
 {
 
-    public FloatEvent orientationEvent;
-
     public SegelnAppState appState;
 
 
@@ -29,19 +27,7 @@ public class SegelnAppController : AppController
 
         if (GameManager.Instance.CubeRole == CubeRole.Wheel)
         {
-            float? orientation = cubeControl.Orientation;
-            if (orientation == null)
-            {
-                print("Cannot get orientation from cubeControl (wheel)");
-                return;
-            }
-
-            WheelState wheelState = new()
-            {
-                Orientation = orientation.Value,
-                Timestamp = cubeControl.Timestamp,
-            };
-            WheelService.Instance.HandleWheelStateChangeFromLocal(wheelState);
+            WheelService.Instance.HandleCubeControl(cubeControl);
         }
         else
         {

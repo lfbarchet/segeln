@@ -66,37 +66,13 @@ public class CubesSimulator : MonoBehaviour
 
         wheelCubeOrientation += (isLeft ? 1 : -1) * UnityEngine.Random.Range(0f, maxWheelSpeed);
 
-        // orientation is between -180 and 179
-        if (wheelCubeOrientation >= 180)
-        {
-            wheelCubeOrientation = -179;
-        }
-        else if (wheelCubeOrientation <= -180)
-        {
-            wheelCubeOrientation = 179;
-        }
 
 
-        if (GameManager.Instance.CubeRole == CubeRole.Wheel)
+        WheelService.Instance.HandleCubeControl(new CubeControl
         {
-            // Simulate ZeroMQ message (local message)
-            (SegelnAppController.Instance as SegelnAppController).HandleCubeControl(new CubeControl
-            {
-                Orientation = wheelCubeOrientation,
-                Timestamp = DateTime.UtcNow
-            });
-        }
-        else
-        {
-            // Simulate and broadcast MQTT message (server message)
-            WheelState state = new()
-            {
-                Orientation = wheelCubeOrientation,
-                Timestamp = DateTime.UtcNow
-            };
-
-            SegelnEventDispatcher.Instance.DispatchWheelStateChangedEvent(state);
-        }
+            Orientation = wheelCubeOrientation,
+            Timestamp = DateTime.UtcNow
+        });
     }
 
     private void SimulateSailCube(bool isUp)
@@ -118,7 +94,7 @@ public class CubesSimulator : MonoBehaviour
 
     private IEnumerator SendShipSpeed(float interval)
     {
-        while(true)
+        while (true)
         {
             SailState state = new()
             {

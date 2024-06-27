@@ -6763,9 +6763,6 @@ MonoBehaviour:
   stateEvent:
     m_PersistentCalls:
       m_Calls: []
-  orientationEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &2141035983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6778,6 +6775,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2fc1b898a60c1438f02ab3f2d8d5cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelOrientation: 0
+  wheelFactor: 0.175
+  shipOrientation: 0
 --- !u!114 &2141035984
 MonoBehaviour:
   m_ObjectHideFlags: 0

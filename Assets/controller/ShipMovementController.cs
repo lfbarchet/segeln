@@ -49,12 +49,12 @@ class ShipMovementController : MonoBehaviour
 
     private void OnWheelStateChanged(WheelState state)
     {
-        Debug.Log($"Orientation: {state.Orientation}, Time: {state.Timestamp}");
+        Debug.Log($"Wheel Orientation: {state.WheelOrientation}, Ship Orientation: {state.ShipOrientation}, Time: {state.Timestamp}");
 
         // orientation is between -180 and 179
-        playerCube.rotation = Quaternion.Euler(0, -1 * state.Orientation + baseRotation, 0);
+        playerCube.rotation = Quaternion.Euler(0, -1 * state.ShipOrientation + baseRotation, 0);
 
-        wheelCube.localEulerAngles = new Vector3(-state.Orientation, 90, -90);
+        wheelCube.localEulerAngles = new Vector3(-state.WheelOrientation, 90, -90);
     }
 
     private void OnSailStateChanged(SailState state)
