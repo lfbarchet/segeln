@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCube: {fileID: 407465637}
-  wheelCube: {fileID: 0}
+  wheelCube: {fileID: 455163368}
   sailCamera: {fileID: 963194227}
   speed: 0
 --- !u!114 &407465640
@@ -1319,6 +1319,11 @@ MonoBehaviour:
   gaugeThreshold: 0.3
   currentShipSpeed: 0
   currentOrientation: 0
+--- !u!4 &455163368 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2512243300098982147, guid: b542a453a12b5427bb0f34fe2c105898, type: 3}
+  m_PrefabInstance: {fileID: 1829405975}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &459024970
 Mesh:
   m_ObjectHideFlags: 0
