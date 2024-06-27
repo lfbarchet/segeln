@@ -45,7 +45,6 @@ class ShipMovementController : MonoBehaviour
     private void FixedUpdate()
     {
         characterController.Move(playerCube.forward * speed * SPEED_MULTIPLIER * Time.deltaTime);
-        // sailCamera.transform.position = new Vector3(playerCube.position.x, sailCamera.transform.position.y, playerCube.position.z -8);
     }
 
     private void OnWheelStateChanged(WheelState state)
