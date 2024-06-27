@@ -7,11 +7,13 @@ using PuzzleCubes.Controller;
 using UnityEngine;
 using PuzzleCubes.Models;
 using System;
+using UnityEngine.SceneManagement;
 
 public class SegelnEventDispatcher : EventDispatcher
 {
     private const string wheelStateTopic = "segeln/app/wheel";
     private const string sailStateTopic = "segeln/app/sail";
+    private const string eventsTopic = "segeln/app/events";
 
     private const string performanceEventTopic = "segeln/app/performance";
 
@@ -31,7 +33,29 @@ public class SegelnEventDispatcher : EventDispatcher
 
         subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(performanceEventTopic).Build(), HandlePerformanceEventStateChangedEvent);
         Debug.Log($"Subscribed to {performanceEventTopic}");
+        subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(eventsTopic).Build(), HandleEventTriggeredEvent);
+        Debug.Log($"Subscribed to {eventsTopic}");
     }
+
+    public void HandleEventTriggeredEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
+    {
+
+        try{
+            var data = System.Text.Encoding.UTF8.GetString(msg.Payload);
+            var jsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
+            
+            if (jsonObject != null && jsonObject.ContainsKey("name") && jsonObject["name"] == "start")
+            {
+                Debug.Log("jetzt wechseln");
+                SceneManager.LoadScene(1);
+            }
+        } catch (JsonException jsonEx)
+        {
+            Debug.LogError($"JSON Parsing Error: {jsonEx.Message}");
+        }
+        
+    }
+    
     public void HandleWheelStateChangedEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
     {
         HandleEvent<WheelState>(msg, wildcardItem, WheelService.Instance.HandleWheelStateChangeFromServer);
@@ -69,6 +93,7 @@ public class SegelnEventDispatcher : EventDispatcher
     {
         var data = System.Text.Encoding.UTF8.GetString(msg.Payload);
         var result = JsonConvert.DeserializeObject<T>(data);
+        Debug.Log("data" + data);
 
         action(result);
     }
