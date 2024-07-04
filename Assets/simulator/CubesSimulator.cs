@@ -5,6 +5,7 @@ using PuzzleCubes.Models;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 
 
@@ -59,6 +60,12 @@ public class CubesSimulator : MonoBehaviour
 
         DetectCubeRoleChange();
         DetectEventTrigger();
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            SceneManager.LoadScene(1);
+            return;
+        }
     }
 
     private void SimulateWheelCube(bool isLeft)

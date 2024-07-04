@@ -39,23 +39,26 @@ public class SegelnEventDispatcher : EventDispatcher
 
     public void HandleEventTriggeredEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
     {
+        Debug.Log("Event triggered");
 
-        try{
+        try
+        {
             var data = System.Text.Encoding.UTF8.GetString(msg.Payload);
             var jsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
-            
+
             if (jsonObject != null && jsonObject.ContainsKey("name") && jsonObject["name"] == "start")
             {
                 Debug.Log("jetzt wechseln");
                 SceneManager.LoadScene(1);
             }
-        } catch (JsonException jsonEx)
+        }
+        catch (JsonException jsonEx)
         {
             Debug.LogError($"JSON Parsing Error: {jsonEx.Message}");
         }
-        
+
     }
-    
+
     public void HandleWheelStateChangedEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
     {
         HandleEvent<WheelState>(msg, wildcardItem, WheelService.Instance.HandleWheelStateChangeFromServer);

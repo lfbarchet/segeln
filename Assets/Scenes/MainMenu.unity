@@ -239,6 +239,7 @@ GameObject:
   - component: {fileID: 806850501}
   - component: {fileID: 806850500}
   - component: {fileID: 806850505}
+  - component: {fileID: 806850506}
   m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
@@ -396,9 +397,22 @@ MonoBehaviour:
   stateEvent:
     m_PersistentCalls:
       m_Calls: []
-  orientationEvent:
-    m_PersistentCalls:
-      m_Calls: []
+--- !u!114 &806850506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806850499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0c0b52d21f5aa7286f51fd715a2a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sailController: {fileID: 0}
+  wheelCubeOrientation: 0
+  sailCubeOrientation: 0
+  sailCubeSpeed: 0
 --- !u!1 &988138845
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,7 +624,7 @@ MonoBehaviour:
   connectedEvent:
     m_PersistentCalls:
       m_Calls: []
-  host: localhost
+  host: 192.168.111.1
   clientId: 
   port: 1883
 --- !u!135 &1511516952
