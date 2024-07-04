@@ -77,6 +77,13 @@ public class SailController : MonoBehaviour
         currentShipSpeed = 1 - (levelToGaugeDiff/gaugeThreshold);
         if(currentShipSpeed < 0)
             currentShipSpeed = 0;
+
+        // publish the speed to the SailService
+        SailService.Instance.HandleSailStateChangeFromLocal(new SailState
+        {
+            Speed = currentShipSpeed,
+            Timestamp = System.DateTime.UtcNow
+        });
     }
 
     // Move the current gauge level slowly towards the target level

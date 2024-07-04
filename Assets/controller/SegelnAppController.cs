@@ -28,12 +28,15 @@ public class SegelnAppController : AppController
         if (GameManager.Instance.CubeRole == CubeRole.Wheel)
         {
             WheelService.Instance.HandleCubeControl(cubeControl);
-        }
-        else
-        {
-            print("Cannot process cubeControl, because CubeRole is not Wheel");
             return;
         }
+        
+        if (GameManager.Instance.CubeRole == CubeRole.Sail){
+            SailService.Instance.HandleCubeControl(cubeControl);
+            return;
+        }
+        
+        print("Cannot process cubeControl, because CubeRole is not implemented: " + GameManager.Instance.CubeRole);
     }
 
 }

@@ -6822,6 +6822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dcabc3bc1810ebff9a329e781e75d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sailController: {fileID: 407465641}
 --- !u!114 &2141035987
 MonoBehaviour:
   m_ObjectHideFlags: 0
