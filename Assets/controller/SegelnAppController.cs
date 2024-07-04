@@ -25,17 +25,26 @@ public class SegelnAppController : AppController
 
         if (cubeControl == null) return;
 
+
+        print("CubeControl: " + cubeControl);
+        print("Orientation: " + cubeControl.Orientation);
+        print("OrientationConfidence: " + cubeControl.OrientationConfidence);
+        print("Timestamp: " + cubeControl.Timestamp);
+        print("toString: " + cubeControl.ToString());
+
         if (GameManager.Instance.CubeRole == CubeRole.Wheel)
         {
             WheelService.Instance.HandleCubeControl(cubeControl);
             return;
         }
-        
-        if (GameManager.Instance.CubeRole == CubeRole.Sail){
+
+        if (GameManager.Instance.CubeRole == CubeRole.Sail)
+        {
+            print("skipping HandleCubeControl, because CubeRole is Sail");
             SailService.Instance.HandleCubeControl(cubeControl);
             return;
         }
-        
+
         print("Cannot process cubeControl, because CubeRole is not implemented: " + GameManager.Instance.CubeRole);
     }
 
