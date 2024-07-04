@@ -40,7 +40,6 @@ public class SegelnAppController : AppController
 
         if (GameManager.Instance.CubeRole == CubeRole.Sail)
         {
-            print("skipping HandleCubeControl, because CubeRole is Sail");
             SailService.Instance.HandleCubeControl(cubeControl);
             return;
         }

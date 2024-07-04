@@ -25,7 +25,6 @@ public class CubesSimulator : MonoBehaviour
 
     readonly float maxWheelSpeed = 1f;
     readonly float maxSailSpeed = 1f;
-    private Coroutine coroutine;
 
     private float gameSpeed = 1;
 
@@ -99,49 +98,20 @@ public class CubesSimulator : MonoBehaviour
         // sailCubeSpeed += (faster ? 1 : -1) * UnityEngine.Random.Range(0f, maxSailSpeed);
     }
 
-    private IEnumerator SendShipSpeed(float interval)
-    {
-        while (true)
-        {
-            SailState state = new()
-            {
-                Speed = sailController.currentShipSpeed,
-                Timestamp = DateTime.UtcNow
-            };
-
-            if (GameManager.Instance.CubeRole == CubeRole.Sail)
-            {
-                // Simulate ZeroMQ message (local message)
-                SailService.Instance.HandleSailStateChangeFromLocal(state);
-            }
-            else
-            {
-                // Simulate and broadcast MQTT message (server message)
-                SegelnEventDispatcher.Instance.DispatchSailStateChangedEvent(state);
-            }
-
-
-            yield return new WaitForSeconds(interval);
-        }
-    }
-
     private void DetectCubeRoleChange()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             GameManager.Instance.SetCubeRole(CubeRole.Wheel);
-            StopCoroutine(coroutine);
 
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             GameManager.Instance.SetCubeRole(CubeRole.Sail);
-            coroutine = StartCoroutine(SendShipSpeed(0.2f));
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             GameManager.Instance.SetCubeRole(CubeRole.Map);
-            StopCoroutine(coroutine);
         }
     }
 
