@@ -84,4 +84,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = speed;
     }
 
+    public bool IsMainRole()
+    {
+        return cubeRole == CubeRole.Map;
+    }
+
 }

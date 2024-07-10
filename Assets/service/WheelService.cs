@@ -73,7 +73,24 @@ public class WheelService : MonoBehaviour
             return;
         }
 
-        float diff = lastCubeControl != null ? cubeControl.Orientation.Value - lastCubeControl.Orientation.Value : 0;
+        float currentOrientation = cubeControl.Orientation.Value;
+        float lastOrientation = lastCubeControl != null ? lastCubeControl.Orientation.Value : currentOrientation; // Default to current if last is null
+        float rawDiff = currentOrientation - lastOrientation;
+
+        // Adjust for wrap-around
+        float diff;
+        if (rawDiff > 180)
+        {
+            diff = rawDiff - 360;
+        }
+        else if (rawDiff < -180)
+        {
+            diff = rawDiff + 360;
+        }
+        else
+        {
+            diff = rawDiff;
+        }
 
 
         wheelOrientation += diff;

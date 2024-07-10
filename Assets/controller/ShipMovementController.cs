@@ -66,8 +66,26 @@ class ShipMovementController : MonoBehaviour
 
     private void OnPerformanceEventStateChanged(PerformanceEventState state)
     {
-        Debug.Log($"Performance: {state.Type}, Value: {state.Value}, Time: {state.Timestamp}");
+        Debug.Log($"Performance: {state.Type}, IsStart: {state.IsStart}, Time: {state.Timestamp}");
 
-        GameManager.Instance.SetGameSpeed(state.Value);
+        if (state.Type == PerformanceEventType.SEA_MONSTER)
+        {
+            HandleSeaMonsterEvent(state);
+            return;
+        }
+
+        Debug.LogWarning("Unknown event type: " + state.Type);
+    }
+
+    private void HandleSeaMonsterEvent(PerformanceEventState state)
+    {
+        if (state.IsStart)
+        {
+            GameManager.Instance.SetGameSpeed(0.25f);
+        }
+        else
+        {
+            GameManager.Instance.SetGameSpeed(1.0f);
+        }
     }
 }

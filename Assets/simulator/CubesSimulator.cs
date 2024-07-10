@@ -5,6 +5,7 @@ using PuzzleCubes.Models;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 
 
@@ -24,9 +25,8 @@ public class CubesSimulator : MonoBehaviour
 
     readonly float maxWheelSpeed = 1f;
     readonly float maxSailSpeed = 1f;
-    private Coroutine coroutine;
 
-    private float gameSpeed = 1;
+    private bool isEventStart = false;
 
     void Update()
     {
@@ -59,6 +59,12 @@ public class CubesSimulator : MonoBehaviour
 
         DetectCubeRoleChange();
         DetectEventTrigger();
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            SceneManager.LoadScene(1);
+            return;
+        }
     }
 
     private void SimulateWheelCube(bool isLeft)
@@ -92,49 +98,20 @@ public class CubesSimulator : MonoBehaviour
         // sailCubeSpeed += (faster ? 1 : -1) * UnityEngine.Random.Range(0f, maxSailSpeed);
     }
 
-    private IEnumerator SendShipSpeed(float interval)
-    {
-        while (true)
-        {
-            SailState state = new()
-            {
-                Speed = sailController.currentShipSpeed,
-                Timestamp = DateTime.UtcNow
-            };
-
-            if (GameManager.Instance.CubeRole == CubeRole.Sail)
-            {
-                // Simulate ZeroMQ message (local message)
-                SailService.Instance.HandleSailStateChangeFromLocal(state);
-            }
-            else
-            {
-                // Simulate and broadcast MQTT message (server message)
-                SegelnEventDispatcher.Instance.DispatchSailStateChangedEvent(state);
-            }
-
-
-            yield return new WaitForSeconds(interval);
-        }
-    }
-
     private void DetectCubeRoleChange()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             GameManager.Instance.SetCubeRole(CubeRole.Wheel);
-            StopCoroutine(coroutine);
 
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             GameManager.Instance.SetCubeRole(CubeRole.Sail);
-            coroutine = StartCoroutine(SendShipSpeed(0.2f));
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             GameManager.Instance.SetCubeRole(CubeRole.Map);
-            StopCoroutine(coroutine);
         }
     }
 
@@ -142,12 +119,11 @@ public class CubesSimulator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            gameSpeed = gameSpeed == 0.5f ? 0.25f : gameSpeed == 0.25f ? 1f : 0.5f;
-
+            isEventStart = !isEventStart;
             PerformanceEventState state = new()
             {
-                Type = PerformanceEventType.SLOW_DOWN,
-                Value = gameSpeed,
+                Type = PerformanceEventType.SEA_MONSTER,
+                IsStart = isEventStart,
                 Timestamp = DateTime.UtcNow
             };
             SegelnEventDispatcher.Instance.DispatchPerformanceEventStateChangedEvent(state);

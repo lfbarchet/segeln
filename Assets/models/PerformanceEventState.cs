@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,16 +8,17 @@ using UnityEngine.Events;
 public enum PerformanceEventType
 {
 
-    SLOW_DOWN,
+    SEA_MONSTER
 }
+
 
 public class PerformanceEventState
 {
     private PerformanceEventType type;
-    private float value;
+    private bool isStart;
     private DateTime timestamp;
 
     public PerformanceEventType Type { get => type; set => type = value; }
-    public float Value { get => value; set => this.value = value; }
+    public bool IsStart { get => isStart; set => isStart = value; }
     public DateTime Timestamp { get => timestamp; set => timestamp = value; }
 }
