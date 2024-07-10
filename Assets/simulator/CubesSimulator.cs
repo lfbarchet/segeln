@@ -26,7 +26,7 @@ public class CubesSimulator : MonoBehaviour
     readonly float maxWheelSpeed = 1f;
     readonly float maxSailSpeed = 1f;
 
-    private float gameSpeed = 1;
+    private bool isEventStart = false;
 
     void Update()
     {
@@ -119,12 +119,11 @@ public class CubesSimulator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            gameSpeed = gameSpeed == 0.5f ? 0.25f : gameSpeed == 0.25f ? 1f : 0.5f;
-
+            isEventStart = !isEventStart;
             PerformanceEventState state = new()
             {
-                Type = PerformanceEventType.SLOW_DOWN,
-                Value = gameSpeed,
+                Type = PerformanceEventType.SEA_MONSTER,
+                IsStart = isEventStart,
                 Timestamp = DateTime.UtcNow
             };
             SegelnEventDispatcher.Instance.DispatchPerformanceEventStateChangedEvent(state);

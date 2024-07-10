@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class EventZone : MonoBehaviour
 {
     [SerializeField]
-    private PerformanceEventType eventType = PerformanceEventType.SLOW_DOWN;
+    private PerformanceEventType eventType = PerformanceEventType.SEA_MONSTER;
 
 
     private void OnTriggerEnter(Collider other)
@@ -13,7 +14,7 @@ public class EventZone : MonoBehaviour
 
         switch (eventType)
         {
-            case PerformanceEventType.SLOW_DOWN:
+            case PerformanceEventType.SEA_MONSTER:
                 EnterSlowDownZone();
                 break;
 
@@ -28,7 +29,7 @@ public class EventZone : MonoBehaviour
     {
         switch (eventType)
         {
-            case PerformanceEventType.SLOW_DOWN:
+            case PerformanceEventType.SEA_MONSTER:
                 ExitSlowDownZone();
                 break;
 
@@ -41,12 +42,21 @@ public class EventZone : MonoBehaviour
     private void EnterSlowDownZone()
     {
         print("EventZone: Entered slow down zone");
-        GameManager.Instance.SetGameSpeed(0.5f);
+        PerformanceEventState state = new()
+        {
+            Type = PerformanceEventType.SEA_MONSTER,
+            IsStart = true,
+            Timestamp = DateTime.UtcNow
+        };
+
+        PerformanceEventService.Instance.HandlePerformanceEventStateChangeFromLocal(
+            state
+        );
     }
 
     private void ExitSlowDownZone()
     {
         print("EventZone: Exited slow down zone");
-        GameManager.Instance.SetGameSpeed(1.0f);
+        // Do we need this, or is this handled by the web app
     }
 }

@@ -19,10 +19,26 @@ public class PerformanceEventService : MonoBehaviour
         }
     }
 
+    public void HandlePerformanceEventStateChangeFromLocal(
+        PerformanceEventState performanceEventState
+    )
+    {
+        // local unity event
+        PerformanceEventStateChangedEvent.Instance.Invoke(performanceEventState);
+        // publish to MQTT
+        SegelnEventDispatcher.Instance.DispatchPerformanceEventStateChangedEvent(performanceEventState);
+    }
+
     public void HandlePerformanceEventStateChangeFromServer(
             PerformanceEventState performanceEventState
         )
     {
+        if (GameManager.Instance.IsMainRole())
+        {
+            print("Skip HandlePerformanceEventStateChangeFromServer, because this is the Main cube");
+            return;
+        }
+
         // local unity event
         PerformanceEventStateChangedEvent.Instance.Invoke(performanceEventState);
     }
