@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using PuzzleCubes.Models;
+using UnityEngine.SceneManagement;
 
 class ShipMovementController : MonoBehaviour
 {
@@ -78,6 +79,11 @@ class ShipMovementController : MonoBehaviour
             HandleSireneEvent(state);
             return;
         }
+        if (state.Type == PerformanceEventType.GOAL)
+        {
+            HandleGoalEvent(state);
+            return;
+        }
 
         Debug.LogWarning("Unknown event type: " + state.Type);
     }
@@ -104,5 +110,11 @@ class ShipMovementController : MonoBehaviour
         {
             GameManager.Instance.SetGameSpeed(1.0f);
         }
+    }
+
+    private void HandleGoalEvent(PerformanceEventState state)
+    {
+        // load scene
+        SceneManager.LoadScene(0);
     }
 }
