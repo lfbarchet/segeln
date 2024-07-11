@@ -8,7 +8,8 @@ using UnityEngine.Events;
 public enum PerformanceEventType
 {
 
-    SEA_MONSTER
+    SEA_MONSTER,
+    SIRENE
 }
 
 

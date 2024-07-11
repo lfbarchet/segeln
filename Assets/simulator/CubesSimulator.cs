@@ -85,15 +85,15 @@ public class CubesSimulator : MonoBehaviour
     {
         sailCubeOrientation += (isUp ? 1 : -1) * maxSailSpeed;
 
-        // orientation is between -180 and 179
-        if (sailCubeOrientation >= 180)
-        {
-            sailCubeOrientation = -179;
-        }
-        else if (sailCubeOrientation <= -180)
-        {
-            sailCubeOrientation = 179;
-        }
+        // // orientation is between -180 and 179
+        // if (sailCubeOrientation >= 180)
+        // {
+        //     sailCubeOrientation = -179;
+        // }
+        // else if (sailCubeOrientation <= -180)
+        // {
+        //     sailCubeOrientation = 179;
+        // }
         sailController.HandleOrientation(sailCubeOrientation);
         // sailCubeSpeed += (faster ? 1 : -1) * UnityEngine.Random.Range(0f, maxSailSpeed);
     }
