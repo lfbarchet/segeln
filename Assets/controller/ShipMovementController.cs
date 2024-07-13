@@ -115,6 +115,6 @@ class ShipMovementController : MonoBehaviour
     private void HandleGoalEvent(PerformanceEventState state)
     {
         // load scene
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(3);
     }
 }
