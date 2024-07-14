@@ -11,32 +11,13 @@ public class EventZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-        switch (eventType)
-        {
-            case PerformanceEventType.SEA_MONSTER:
-                EnterSlowDownZone();
-                break;
-
-            default:
-                Debug.LogWarning("EventZone: Unknown event type: " + eventType);
-                break;
-        }
+        EnterSlowDownZone();
 
     }
 
     private void OnTriggerExit(Collider other)
     {
-        switch (eventType)
-        {
-            case PerformanceEventType.SEA_MONSTER:
-                ExitSlowDownZone();
-                break;
-
-            default:
-                Debug.LogWarning("EventZone: Unknown event type: " + eventType);
-                break;
-        }
+        ExitSlowDownZone();
     }
 
     private void EnterSlowDownZone()
@@ -44,7 +25,7 @@ public class EventZone : MonoBehaviour
         print("EventZone: Entered slow down zone");
         PerformanceEventState state = new()
         {
-            Type = PerformanceEventType.SEA_MONSTER,
+            Type = eventType,
             IsStart = true,
             Timestamp = DateTime.UtcNow
         };

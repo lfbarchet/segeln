@@ -10,6 +10,7 @@ public enum PerformanceEventType
 
     SEA_MONSTER,
     SIRENE,
+    STORMY_SEA,
     GOAL
 }
 
