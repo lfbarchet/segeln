@@ -1389,7 +1389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sail: {fileID: 1017167535}
   ship: {fileID: 407465636}
-  sailOrientation: 0.5
+  level: 0.5
   levelTarget: 0.5
   gaugeIndicator: {fileID: 838800395}
   gauge: 0.5
@@ -1397,7 +1397,7 @@ MonoBehaviour:
   targetChangeDelay: 3
   speed: 0.0001
   updateSpeed: 0.2
-  sailMovementSpeed: 0.0001
+  sailMovementSpeed: 0.0005
   gaugeThreshold: 0.3
   currentShipSpeed: 0
   currentOrientation: 0
