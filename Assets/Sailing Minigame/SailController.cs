@@ -37,6 +37,9 @@ public class SailController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GameManager.Instance.CubeRole != CubeRole.Sail)
+            return;
+
         coroutines = new List<IEnumerator>();
         coroutines.Add(NextGaugeTarget(targetChangeDelay));
         coroutines.Add(UpdateLevelTarget());
@@ -53,6 +56,9 @@ public class SailController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.CubeRole != CubeRole.Sail)
+            return;
+
         gauge = CalculateGauge(speed);
         level = CalculateLevel(sailMovementSpeed);
         // gaugeIndicator.transform.position = new Vector3(-7, 2+(gauge*3), 0);
@@ -66,6 +72,9 @@ public class SailController : MonoBehaviour
 
     void OnDestroy()
     {
+        if (GameManager.Instance.CubeRole != CubeRole.Sail)
+            return;
+
         foreach (IEnumerator coroutine in coroutines)
             StopCoroutine(coroutine);
     }

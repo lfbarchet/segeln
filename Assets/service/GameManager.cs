@@ -27,6 +27,25 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Camera mapCamera;
 
+    [Header("Game Status")]
+    [SerializeField]
+    private bool isRunning = false;
+    public bool IsRunning
+    {
+        get => isRunning; set
+        {
+            isRunning = value;
+            if (value)
+            {
+                SetCubeRole(cubeRole);
+            }
+            else
+            {
+                DeactivateAllCameras();
+            }
+        }
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -42,6 +61,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SetCubeRole(cubeRole);
+        IsRunning = false;
     }
 
     void OnValidate()
@@ -61,6 +81,7 @@ public class GameManager : MonoBehaviour
     {
         this.cubeRole = cubeRole;
 
+        if (!IsRunning) return;
 
         switch (cubeRole)
         {
