@@ -8,6 +8,7 @@ using UnityEngine;
 using PuzzleCubes.Models;
 using System;
 using UnityEngine.SceneManagement;
+using Newtonsoft.Json.Linq;
 
 public class SegelnEventDispatcher : EventDispatcher
 {
@@ -44,12 +45,36 @@ public class SegelnEventDispatcher : EventDispatcher
         try
         {
             var data = System.Text.Encoding.UTF8.GetString(msg.Payload);
-            var jsonObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
+            var jsonObject = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
+            print("jsonob: " +jsonObject);
 
-            if (jsonObject != null && jsonObject.ContainsKey("name") && jsonObject["name"] == "start")
+            if (jsonObject != null) //&& jsonObject.ContainsKey("name") && jsonObject["name"] == "start")
             {
-                Debug.Log("jetzt wechseln");
+                //Debug.Log("jetzt wechseln");
+                
                 SceneManager.LoadScene(1);
+
+
+                // logik falls cubes nicht klappen
+                var roles = jsonObject["roles"] as JObject;
+                print("roles: " +roles);
+                int wheelRole = roles["wheel"].Value<int>();
+                int sailRole = roles["sail"].Value<int>();
+                int mapRole = roles["map"].Value<int>();
+                print("wheelrole: "+ wheelRole);
+                print(wheelRole == SystemInfo.graphicsDeviceVendorID);
+
+                if (wheelRole == SystemInfo.graphicsDeviceVendorID){
+                    GameManager.Instance.SetCubeRole(CubeRole.Wheel);
+                }
+                if (sailRole == SystemInfo.graphicsDeviceVendorID){
+                    GameManager.Instance.SetCubeRole(CubeRole.Sail);
+                }
+                if (mapRole == SystemInfo.graphicsDeviceVendorID){
+                    GameManager.Instance.SetCubeRole(CubeRole.Map);
+                }
+                
+                
             }
         }
         catch (JsonException jsonEx)

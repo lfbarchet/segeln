@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum CubeRole
 {
@@ -19,24 +20,34 @@ public class GameManager : MonoBehaviour
     private CubeRole cubeRole = CubeRole.Map;
     public CubeRole CubeRole { get => cubeRole; set => SetCubeRole(value); }
 
-    [Header("Camera")]
-    [SerializeField]
-    private Camera sailCamera;
-    [SerializeField]
-    private Camera wheelCamera;
-    [SerializeField]
-    private Camera mapCamera;
-
+   
     private void Awake()
     {
         if (Instance == null)
-        {
+        {   
+            DontDestroyOnLoad(gameObject);
             Instance = this;
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;  
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("New scene loaded: " + scene.name);
+        CameraManager.Instance?.ActivateCamera(cubeRole);
     }
 
     void Start()
@@ -48,35 +59,15 @@ public class GameManager : MonoBehaviour
     {
         print("OnValidate: " + cubeRole);
         SetCubeRole(cubeRole);
-    }
-
-    void DeactivateAllCameras()
-    {
-        mapCamera.enabled = false;
-        sailCamera.enabled = false;
-        wheelCamera.enabled = false;
+        print("id:"+SystemInfo.graphicsDeviceVendorID);
     }
 
     public void SetCubeRole(CubeRole cubeRole)
     {
+        print("gamemanager: " + cubeRole);
         this.cubeRole = cubeRole;
-
-
-        switch (cubeRole)
-        {
-            case CubeRole.Wheel:
-                DeactivateAllCameras();
-                wheelCamera.enabled = true;
-                break;
-            case CubeRole.Sail:
-                DeactivateAllCameras();
-                sailCamera.enabled = true;
-                break;
-            case CubeRole.Map:
-                DeactivateAllCameras();
-                mapCamera.enabled = true;
-                break;
-        }
+        print("cameramanager: "+  CameraManager.Instance);
+        
     }
 
     public void SetGameSpeed(float speed)
