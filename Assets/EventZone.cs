@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class EventZone : MonoBehaviour
 {
-    [SerializeField]
-    private PerformanceEventType eventType = PerformanceEventType.SEA_MONSTER;
+    public PerformanceEventType eventType = PerformanceEventType.SEA_MONSTER;
 
+
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -39,5 +45,11 @@ public class EventZone : MonoBehaviour
     {
         print("EventZone: Exited slow down zone");
         // Do we need this, or is this handled by the web app
+    }
+
+    public void PlaySound()
+    {
+        audioSource.enabled = true;
+        audioSource.Play();
     }
 }
