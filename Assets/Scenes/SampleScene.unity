@@ -4453,6 +4453,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7742184694245642541, guid: ed9be8a39983bed9ea0a45bdaa8d35d4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1553918568}
+    - targetCorrespondingSourceObject: {fileID: 7742184694245642541, guid: ed9be8a39983bed9ea0a45bdaa8d35d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2061450167}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed9be8a39983bed9ea0a45bdaa8d35d4, type: 3}
 --- !u!43 &1223005305
@@ -8486,6 +8489,80 @@ Transform:
   - {fileID: 273520168}
   m_Father: {fileID: 67941312}
   m_LocalEulerAnglesHint: {x: 0, y: -59.3, z: 0}
+--- !u!1001 &2061450166
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 67941312}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 203.94704
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 248.67287
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 248.67287
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -97.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 65.6
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -12.918338
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.17768207
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.17768201
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.68441886
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.68441874
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -510.893
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 937e59837e1024218a09882f68657175, type: 3}
+      propertyPath: m_Name
+      value: Clouds
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 937e59837e1024218a09882f68657175, type: 3}
+--- !u!4 &2061450167 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 937e59837e1024218a09882f68657175, type: 3}
+  m_PrefabInstance: {fileID: 2061450166}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2086021020 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6896430398532478783, guid: ed9be8a39983bed9ea0a45bdaa8d35d4, type: 3}
