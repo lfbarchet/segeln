@@ -21,16 +21,13 @@ public class SegelnAppController : AppController
     // CubeControl directly from the Cube via ZeroMQ
     public void HandleCubeControl(CubeControl cubeControl)
     {
-        print("HandleCubeControl");
 
         if (cubeControl == null) return;
 
-
-        print("CubeControl: " + cubeControl);
-        print("Orientation: " + cubeControl.Orientation);
-        print("OrientationConfidence: " + cubeControl.OrientationConfidence);
-        print("Timestamp: " + cubeControl.Timestamp);
-        print("toString: " + cubeControl.ToString());
+        if (!GameManager.Instance.IsRunning)
+        {
+            return;
+        }
 
         if (GameManager.Instance.CubeRole == CubeRole.Wheel)
         {

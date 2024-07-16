@@ -20,7 +20,26 @@ public class GameManager : MonoBehaviour
     private CubeRole cubeRole = CubeRole.Map;
     public CubeRole CubeRole { get => cubeRole; set => SetCubeRole(value); }
 
-   
+
+    [Header("Game Status")]
+    [SerializeField]
+    private bool isRunning = false;
+    public bool IsRunning
+    {
+        get => isRunning; set
+        {
+            isRunning = value;
+            if (value)
+            {
+                SetCubeRole(cubeRole);
+            }
+            else
+            {
+                DeactivateAllCameras();
+            }
+        }
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -53,6 +72,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SetCubeRole(cubeRole);
+        IsRunning = false;
     }
 
     void OnValidate()
@@ -64,10 +84,10 @@ public class GameManager : MonoBehaviour
 
     public void SetCubeRole(CubeRole cubeRole)
     {
+        if (!IsRunning) return;
         print("gamemanager: " + cubeRole);
         this.cubeRole = cubeRole;
         print("cameramanager: "+  CameraManager.Instance);
-        
     }
 
     public void SetGameSpeed(float speed)
