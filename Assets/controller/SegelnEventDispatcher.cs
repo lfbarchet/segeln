@@ -24,7 +24,7 @@ public class SegelnEventDispatcher : EventDispatcher
     {
         Instance = this;
         base.Initialize();
-
+        
 
         subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(wheelStateTopic).Build(), HandleWheelStateChangedEvent);
         Debug.Log($"Subscribed to {wheelStateTopic}");
@@ -55,22 +55,19 @@ public class SegelnEventDispatcher : EventDispatcher
                 SceneManager.LoadScene(1);
 
 
-                // logik falls cubes nicht klappen
                 var roles = jsonObject["roles"] as JObject;
-                print("roles: " +roles);
-                int wheelRole = roles["wheel"].Value<int>();
-                int sailRole = roles["sail"].Value<int>();
-                int mapRole = roles["map"].Value<int>();
-                print("wheelrole: "+ wheelRole);
-                print(wheelRole == SystemInfo.graphicsDeviceVendorID);
+                string wheelRole = roles["wheel"].Value<string>();
+                string sailRole = roles["sail"].Value<string>();
+                string mapRole = roles["map"].Value<string>();
+                MqttCommunication mqttCommunication = FindObjectOfType<MqttCommunication>();
 
-                if (wheelRole == SystemInfo.graphicsDeviceVendorID){
+                if (wheelRole.Equals(mqttCommunication.clientId)){
                     GameManager.Instance.SetCubeRole(CubeRole.Wheel);
                 }
-                if (sailRole == SystemInfo.graphicsDeviceVendorID){
+                if (sailRole.Equals(mqttCommunication.clientId)){
                     GameManager.Instance.SetCubeRole(CubeRole.Sail);
                 }
-                if (mapRole == SystemInfo.graphicsDeviceVendorID){
+                if (mapRole.Equals(mqttCommunication.clientId)){
                     GameManager.Instance.SetCubeRole(CubeRole.Map);
                 }
                 
