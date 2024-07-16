@@ -53,7 +53,7 @@ public class RouteDistance : MonoBehaviour
         // vor�bergehende Beispielausgaben, wenn man zu weit von der Route abweicht
         if (Damage > 10000)
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
         else if (smallestDistance > 100)
         {
