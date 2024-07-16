@@ -37,20 +37,18 @@ public class SailController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GameManager.Instance.CubeRole != CubeRole.Sail)
-            return;
-
+        // if (GameManager.Instance.CubeRole != CubeRole.Sail)
+        //     return;
+        
+        sailStartRotation = sail.transform.localRotation;
+        gaugeStartPosition = gaugeIndicator.transform.localPosition;
+        Debug.Log("Sail Start Rotation: " + sailStartRotation);
         coroutines = new List<IEnumerator>();
         coroutines.Add(NextGaugeTarget(targetChangeDelay));
         coroutines.Add(UpdateLevelTarget());
-
+        
         foreach (IEnumerator coroutine in coroutines)
             StartCoroutine(coroutine);
-
-        sailStartRotation = sail.transform.localRotation;
-        gaugeStartPosition = gaugeIndicator.transform.localPosition;
-        // sail.transform.rotation = 30;
-        // lastLevel = level;
     }
 
     // Update is called once per frame
@@ -61,11 +59,9 @@ public class SailController : MonoBehaviour
 
         gauge = CalculateGauge(speed);
         level = CalculateLevel(sailMovementSpeed);
-        // gaugeIndicator.transform.position = new Vector3(-7, 2+(gauge*3), 0);
-        // sail.transform.position = new Vector3(0, 4+(level*3), 0);
+
         sail.transform.localRotation = sailStartRotation * Quaternion.AngleAxis((sailStartRotation.y + 30) - (60 * level), Vector3.forward);
-        gaugeIndicator.transform.localPosition = new Vector3((gaugeStartPosition.x - 4 + 8 * gauge), gaugeStartPosition.y, gaugeStartPosition.z); // + (10*gauge), gaugeStartPosition.y, gaugeStartPosition.z);
-        // gaugeIndicator.transform.rotation = Quaternion.AngleAxis(-90, Vector3.forward);
+        gaugeIndicator.transform.localPosition = new Vector3((gaugeStartPosition.x - 4 + 8 * gauge), gaugeStartPosition.y, gaugeStartPosition.z);
 
         CalculateCurrentSpeed();
     }
