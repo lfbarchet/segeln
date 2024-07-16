@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour
         print("gamemanager: " + cubeRole);
         this.cubeRole = cubeRole;
         print("cameramanager: "+  CameraManager.Instance);
+        CameraManager.Instance?.ActivateCamera(cubeRole);
     }
 
     public void SetGameSpeed(float speed)
