@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class RouteDistance : MonoBehaviour
 {
@@ -49,9 +51,9 @@ public class RouteDistance : MonoBehaviour
         }
 
         // vor�bergehende Beispielausgaben, wenn man zu weit von der Route abweicht
-        if (smallestDistance > 150)
+        if (Damage > 10000)
         {
-            Debug.Log("GameOver");
+            SceneManager.LoadScene(1);
         }
         else if (smallestDistance > 100)
         {

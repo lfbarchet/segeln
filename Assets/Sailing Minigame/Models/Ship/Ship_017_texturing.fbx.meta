@@ -42,6 +42,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Paint
+    second: {fileID: 2100000, guid: c6c2901652c1d4fed9a0aaeab8a1dadf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Pillars
     second: {fileID: 2100000, guid: 46bcf4056fb25435f91742f92214c384, type: 2}
   - first:

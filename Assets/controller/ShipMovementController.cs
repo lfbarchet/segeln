@@ -17,6 +17,10 @@ class ShipMovementController : MonoBehaviour
     private float speed = 0.0f;
     private readonly float SPEED_MULTIPLIER = 50.0f;
 
+    [Header("Performance Events")]
+    [SerializeField]
+    private List<EventZone> eventZones = new List<EventZone>();
+
 
 
     private CharacterController characterController;
@@ -69,6 +73,7 @@ class ShipMovementController : MonoBehaviour
     {
         Debug.Log($"Performance: {state.Type}, IsStart: {state.IsStart}, Time: {state.Timestamp}");
 
+        PlaySoundForEvent(state.Type);
         if (state.Type == PerformanceEventType.SEA_MONSTER)
         {
             HandleSeaMonsterEvent(state);
@@ -116,5 +121,14 @@ class ShipMovementController : MonoBehaviour
     {
         // load scene
         SceneManager.LoadScene(3);
+    }
+
+    private void PlaySoundForEvent(PerformanceEventType eventType)
+    {
+        EventZone eventZone = eventZones.Find(e => e.eventType == eventType);
+        if (eventZone != null)
+        {
+            eventZone.PlaySound();
+        }
     }
 }
