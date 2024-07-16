@@ -5912,6 +5912,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5501899868819946553, guid: adbbdf498bd750bd692d4d04afed45c9, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f0e9e39ff0f9fb54980ea5ba23687b8f, type: 3}
     - target: {fileID: 6902262428023589292, guid: adbbdf498bd750bd692d4d04afed45c9, type: 3}
       propertyPath: eventType
       value: 2
@@ -6489,6 +6493,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5501899868819946553, guid: adbbdf498bd750bd692d4d04afed45c9, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ad66bd14d92c0844ba86653687c1d94f, type: 3}
     - target: {fileID: 6902262428023589292, guid: adbbdf498bd750bd692d4d04afed45c9, type: 3}
       propertyPath: eventType
       value: 3
@@ -8422,6 +8430,7 @@ GameObject:
   - component: {fileID: 2141035986}
   - component: {fileID: 2141035988}
   - component: {fileID: 2141035989}
+  - component: {fileID: 2141035985}
   m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
@@ -8516,9 +8525,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubeRole: 2
-  sailCamera: {fileID: 963194227}
-  wheelCamera: {fileID: 654616845}
-  mapCamera: {fileID: 292314981}
   isRunning: 0
 --- !u!114 &2141035986
 MonoBehaviour:
@@ -8656,6 +8662,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5501899868819946553, guid: adbbdf498bd750bd692d4d04afed45c9, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 71f98e6841d846348987965f007f9238, type: 3}
     - target: {fileID: 8376578284386813814, guid: adbbdf498bd750bd692d4d04afed45c9, type: 3}
       propertyPath: m_Name
       value: ZoneTriggerZone
