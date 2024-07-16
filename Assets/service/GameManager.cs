@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                DeactivateAllCameras();
+                CameraManager.Instance?.DeactivateAllCameras();
             }
         }
     }
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     public void SetCubeRole(CubeRole cubeRole)
     {
-        if (!IsRunning) return;
+        //if (!IsRunning) return; 
         print("gamemanager: " + cubeRole);
         this.cubeRole = cubeRole;
         print("cameramanager: "+  CameraManager.Instance);

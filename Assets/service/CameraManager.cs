@@ -32,7 +32,7 @@ public class CameraManager : MonoBehaviour
     }
 
 
-    void DeactivateAllCameras()
+    public void DeactivateAllCameras()
     {
         mapCamera.enabled = false;
         sailCamera.enabled = false;
