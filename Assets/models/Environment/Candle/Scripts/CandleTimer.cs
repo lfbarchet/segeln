@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CandleTimer : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class CandleTimer : MonoBehaviour
             nail.isKinematic = false;
         }
         yield return new WaitForSeconds(3);
-        
+        SceneManager.LoadScene(2);
         // TO DO: Call Game Over
     }
 }
