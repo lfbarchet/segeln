@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
 
     public bool IsMainRole()
     {
-        return cubeRole == CubeRole.Map;
+        return cubeRole == CubeRole.Sail;
     }
 
     public bool isGameScene()
