@@ -75,24 +75,7 @@ public class RouteDistance : MonoBehaviour
         // vor�bergehende Beispielausgaben, wenn man zu weit von der Route abweicht
         if (Damage > 1000)
         {
-            if (GameManager.Instance.IsMainRole())
-            {
-                GameState gameState = new GameState()
-                {
-                    Damage = 1_000_000,
-                    ShipPositionX = 0,
-                    ShipPositionY = 0,
-                    ShipPositionZ = 0,
-                    ShipRotationX = 0,
-                    ShipRotationY = 0,
-                    ShipRotationZ = 0,
-                    Timestamp = DateTime.UtcNow
-                };
-                GameStateService.Instance.HandleGameStateChangeFromLocal(
-                gameState
-                );
-            }
-            SceneManager.LoadScene(2);
+            GameManager.Instance.GameOver();
         }
         else if (smallestDistance > 100)
         {

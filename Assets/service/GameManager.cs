@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -105,6 +106,29 @@ public class GameManager : MonoBehaviour
     public bool isGameScene()
     {
         return SceneManager.GetActiveScene().buildIndex == 1;
+    }
+
+    public void GameOver()
+    {
+        if (IsMainRole())
+        {
+            GameState gameState = new GameState()
+            {
+                Damage = 1_000_000,
+                ShipPositionX = 0,
+                ShipPositionY = 0,
+                ShipPositionZ = 0,
+                ShipRotationX = 0,
+                ShipRotationY = 0,
+                ShipRotationZ = 0,
+                Timestamp = DateTime.UtcNow
+            };
+
+            GameStateService.Instance.HandleGameStateChangeFromLocal(
+                gameState
+            );
+        }
+        SceneManager.LoadScene(2);
     }
 
 }

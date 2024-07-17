@@ -16,17 +16,19 @@ public class CandleTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public IEnumerator Timer()
     {
-        foreach(Rigidbody nail in nails)
+        foreach (Rigidbody nail in nails)
         {
-            yield return new WaitForSeconds(playTime/nails.Count);
+            yield return new WaitForSeconds(playTime / nails.Count);
             nail.isKinematic = false;
         }
         yield return new WaitForSeconds(3);
-        SceneManager.LoadScene(2);
+
+
+        GameManager.Instance.GameOver();
     }
 }
