@@ -68,6 +68,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("New scene loaded: " + scene.name);
         CameraManager.Instance?.ActivateCamera(cubeRole);
+
+        if (scene.buildIndex == 2 && IsMainRole())
+        {
+            GameStateService.Instance.SendGameOver();
+        }
     }
 
     void Start()
@@ -112,23 +117,10 @@ public class GameManager : MonoBehaviour
     {
         if (IsMainRole())
         {
-            GameState gameState = new GameState()
-            {
-                Damage = 1_000_000,
-                ShipPositionX = 0,
-                ShipPositionY = 0,
-                ShipPositionZ = 0,
-                ShipRotationX = 0,
-                ShipRotationY = 0,
-                ShipRotationZ = 0,
-                Timestamp = DateTime.UtcNow
-            };
-
-            GameStateService.Instance.HandleGameStateChangeFromLocal(
-                gameState
-            );
+            GameStateService.Instance.SendGameOver();
         }
         SceneManager.LoadScene(2);
     }
+
 
 }

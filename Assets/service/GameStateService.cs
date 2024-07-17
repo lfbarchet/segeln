@@ -58,4 +58,23 @@ public class GameStateService : MonoBehaviour
         // local unity event
         GameStateChangedEvent.Instance.Invoke(gameState);
     }
+
+    public void SendGameOver()
+    {
+        GameState gameState = new GameState()
+        {
+            Damage = 1_000_000,
+            ShipPositionX = 0,
+            ShipPositionY = 0,
+            ShipPositionZ = 0,
+            ShipRotationX = 0,
+            ShipRotationY = 0,
+            ShipRotationZ = 0,
+            Timestamp = DateTime.UtcNow
+        };
+
+        HandleGameStateChangeFromLocal(
+            gameState
+        );
+    }
 }
