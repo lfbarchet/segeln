@@ -33,13 +33,6 @@ public class SegelnAppController : AppController
             return;
         }
 
-        var diff = DateTime.Now - lastCubeControlTimestamp;
-        if (diff.TotalSeconds < cubeControlInterval)
-        {
-            return;
-        }
-        lastCubeControlTimestamp = DateTime.Now;
-
 
         if (GameManager.Instance.CubeRole == CubeRole.Wheel)
         {

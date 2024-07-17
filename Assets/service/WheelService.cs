@@ -38,12 +38,27 @@ public class WheelService : MonoBehaviour
         }
     }
 
+
+
+    private DateTime lastCubeControlTimestamp;
+    // every 200ms
+    private readonly float cubeControlInterval = 0.2f;
+
     public void HandleWheelStateChangeFromLocal(
         WheelState wheelState
     )
     {
         // local unity event
         WheelStateChangedEvent.Instance.Invoke(wheelState);
+
+        var diff = DateTime.UtcNow - lastCubeControlTimestamp;
+        if (diff.TotalSeconds < cubeControlInterval)
+        {
+            return;
+        }
+
+        lastCubeControlTimestamp = DateTime.UtcNow;
+
         // publish to MQTT
         SegelnEventDispatcher.Instance.DispatchWheelStateChangedEvent(wheelState);
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using PuzzleCubes.Models;
@@ -23,12 +24,26 @@ public class SailService : MonoBehaviour
         }
     }
 
+
+    private DateTime lastCubeControlTimestamp;
+    // every 200ms
+    private readonly float cubeControlInterval = 0.2f;
+
     public void HandleSailStateChangeFromLocal(
         SailState sailState
     )
     {
         // local unity event
         SailStateChangedEvent.Instance.Invoke(sailState);
+
+        var diff = DateTime.UtcNow - lastCubeControlTimestamp;
+        if (diff.TotalSeconds < cubeControlInterval)
+        {
+            return;
+        }
+
+        lastCubeControlTimestamp = DateTime.UtcNow;
+
         // publish to MQTT
         SegelnEventDispatcher.Instance.DispatchSailStateChangedEvent(sailState);
     }
