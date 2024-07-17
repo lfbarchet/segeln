@@ -10,6 +10,10 @@ public class SegelnAppController : AppController
 
     public SegelnAppState appState;
 
+    private DateTime lastCubeControlTimestamp;
+    // every 200ms
+    private readonly float cubeControlInterval = 0.2f;
+
 
     protected override void Initialize()
     {
@@ -28,6 +32,14 @@ public class SegelnAppController : AppController
         {
             return;
         }
+
+        var diff = DateTime.Now - lastCubeControlTimestamp;
+        if (diff.TotalSeconds < cubeControlInterval)
+        {
+            return;
+        }
+        lastCubeControlTimestamp = DateTime.Now;
+
 
         if (GameManager.Instance.CubeRole == CubeRole.Wheel)
         {

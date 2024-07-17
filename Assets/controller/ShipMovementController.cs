@@ -54,7 +54,7 @@ class ShipMovementController : MonoBehaviour
     {
         characterController.Move(playerCube.forward * speed * SPEED_MULTIPLIER * Time.deltaTime);
 
-        if (GameManager.Instance.IsMainRole())
+        if (GameManager.Instance.IsMainRole() && GameManager.Instance.IsRunning)
         {
             GameState gameState = new GameState()
             {
