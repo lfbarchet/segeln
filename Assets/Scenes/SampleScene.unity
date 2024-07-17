@@ -1399,8 +1399,8 @@ Transform:
   m_GameObject: {fileID: 407465636}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.998935, z: -0, w: 0.046139847}
-  m_LocalPosition: {x: 771, y: -131.1, z: 715}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: 784, y: -131.1, z: 833}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 963194228}
@@ -3149,18 +3149,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2048331097, guid: 1d2a232409eb7194aaad11a71d483580, type: 3}
-      propertyPath: host
-      value: localhost
-      objectReference: {fileID: 0}
-    - target: {fileID: 2048331097, guid: 1d2a232409eb7194aaad11a71d483580, type: 3}
-      propertyPath: connectedEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2048331097, guid: 1d2a232409eb7194aaad11a71d483580, type: 3}
-      propertyPath: connectedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_Name
       value: IngameDebugConsole
@@ -3419,6 +3407,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 224856348943071238, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048331097, guid: 1d2a232409eb7194aaad11a71d483580, type: 3}
+      propertyPath: host
+      value: localhost
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048331097, guid: 1d2a232409eb7194aaad11a71d483580, type: 3}
+      propertyPath: connectedEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048331097, guid: 1d2a232409eb7194aaad11a71d483580, type: 3}
+      propertyPath: connectedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
