@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
-        {   
+        {
             DontDestroyOnLoad(gameObject);
             Instance = this;
         }
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;  
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -79,15 +79,16 @@ public class GameManager : MonoBehaviour
     {
         print("OnValidate: " + cubeRole);
         SetCubeRole(cubeRole);
-        print("id:"+SystemInfo.graphicsDeviceVendorID);
+        print("id:" + SystemInfo.graphicsDeviceVendorID);
     }
 
     public void SetCubeRole(CubeRole cubeRole)
     {
-        //if (!IsRunning) return; 
-        print("gamemanager: " + cubeRole);
         this.cubeRole = cubeRole;
-        print("cameramanager: "+  CameraManager.Instance);
+
+
+        if (!IsRunning) return;
+
         CameraManager.Instance?.ActivateCamera(cubeRole);
     }
 

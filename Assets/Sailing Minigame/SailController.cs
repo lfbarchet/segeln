@@ -39,14 +39,14 @@ public class SailController : MonoBehaviour
     {
         // if (GameManager.Instance.CubeRole != CubeRole.Sail)
         //     return;
-        
+
         sailStartRotation = sail.transform.localRotation;
         gaugeStartPosition = gaugeIndicator.transform.localPosition;
         Debug.Log("Sail Start Rotation: " + sailStartRotation);
         coroutines = new List<IEnumerator>();
         coroutines.Add(NextGaugeTarget(targetChangeDelay));
         coroutines.Add(UpdateLevelTarget());
-        
+
         foreach (IEnumerator coroutine in coroutines)
             StartCoroutine(coroutine);
     }
@@ -54,7 +54,7 @@ public class SailController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.CubeRole != CubeRole.Sail)
+        if (GameManager.Instance.CubeRole != CubeRole.Sail || !GameManager.Instance.IsRunning)
             return;
 
         gauge = CalculateGauge(speed);
@@ -68,7 +68,7 @@ public class SailController : MonoBehaviour
 
     void OnDestroy()
     {
-        if (GameManager.Instance.CubeRole != CubeRole.Sail)
+        if (GameManager.Instance.CubeRole != CubeRole.Sail || !GameManager.Instance.IsRunning)
             return;
 
         foreach (IEnumerator coroutine in coroutines)
