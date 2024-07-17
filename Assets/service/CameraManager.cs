@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,16 +20,28 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private Camera mapCamera;
 
+
+    public TextMeshProUGUI fpsText;
+    public float deltaTime;
+
     private void Awake()
     {
         if (Instance == null)
-        {   
+        {
             Instance = this;
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+
+    void Update()
+    {
+        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+        float fps = 1.0f / deltaTime;
+        fpsText.text = "FPS: " + Mathf.Ceil(fps).ToString();
     }
 
 
@@ -61,5 +74,8 @@ public class CameraManager : MonoBehaviour
         }
     }
 
- 
+
+
+
+
 }
