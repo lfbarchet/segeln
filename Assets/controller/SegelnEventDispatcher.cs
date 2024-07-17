@@ -24,7 +24,7 @@ public class SegelnEventDispatcher : EventDispatcher
     {
         Instance = this;
         base.Initialize();
-        
+
 
         subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(wheelStateTopic).Build(), HandleWheelStateChangedEvent);
         Debug.Log($"Subscribed to {wheelStateTopic}");
@@ -46,12 +46,12 @@ public class SegelnEventDispatcher : EventDispatcher
         {
             var data = System.Text.Encoding.UTF8.GetString(msg.Payload);
             var jsonObject = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
-            print("jsonob: " +jsonObject);
+            print("jsonob: " + jsonObject);
 
             if (jsonObject != null) //&& jsonObject.ContainsKey("name") && jsonObject["name"] == "start")
             {
                 //Debug.Log("jetzt wechseln");
-                
+
                 SceneManager.LoadScene(1);
 
 
@@ -60,18 +60,28 @@ public class SegelnEventDispatcher : EventDispatcher
                 string sailRole = roles["sail"].Value<string>();
                 string mapRole = roles["map"].Value<string>();
                 MqttCommunication mqttCommunication = FindObjectOfType<MqttCommunication>();
+                Debug.LogWarning("mqttCommunication.clientId: " + mqttCommunication.clientId);
+                Debug.LogWarning("wheelRole: " + wheelRole);
+                Debug.LogWarning("sailRole: " + sailRole);
+                Debug.LogWarning("mapRole: " + mapRole);
 
-                if (wheelRole.Equals(mqttCommunication.clientId)){
+                var clientId = mqttCommunication.clientId;
+                Debug.LogWarning("clientId: " + clientId);
+
+                if (wheelRole.Equals(clientId))
+                {
                     GameManager.Instance.SetCubeRole(CubeRole.Wheel);
                 }
-                if (sailRole.Equals(mqttCommunication.clientId)){
+                if (sailRole.Equals(clientId))
+                {
                     GameManager.Instance.SetCubeRole(CubeRole.Sail);
                 }
-                if (mapRole.Equals(mqttCommunication.clientId)){
+                if (mapRole.Equals(clientId))
+                {
                     GameManager.Instance.SetCubeRole(CubeRole.Map);
                 }
-                
-                
+
+
             }
         }
         catch (JsonException jsonEx)
