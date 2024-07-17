@@ -12,6 +12,8 @@ using Newtonsoft.Json.Linq;
 
 public class SegelnEventDispatcher : EventDispatcher
 {
+    private const string gameStateTopic = "segeln/app/gameState";
+
     private const string wheelStateTopic = "segeln/app/wheel";
     private const string sailStateTopic = "segeln/app/sail";
     private const string eventsTopic = "segeln/app/events";
@@ -25,6 +27,8 @@ public class SegelnEventDispatcher : EventDispatcher
         Instance = this;
         base.Initialize();
 
+        subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(gameStateTopic).Build(), HandleGameStateEvent);
+        Debug.Log($"Subscribed to {gameStateTopic}");
 
         subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(wheelStateTopic).Build(), HandleWheelStateChangedEvent);
         Debug.Log($"Subscribed to {wheelStateTopic}");
@@ -89,6 +93,16 @@ public class SegelnEventDispatcher : EventDispatcher
             Debug.LogError($"JSON Parsing Error: {jsonEx.Message}");
         }
 
+    }
+
+    public void DispatchGameStateEvent(GameState state)
+    {
+        DispatchEvent(gameStateTopic, state);
+    }
+
+    public void HandleGameStateEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
+    {
+        HandleEvent<GameState>(msg, wildcardItem, GameStateService.Instance.HandleGameStateChangeFromServer);
     }
 
     public void HandleWheelStateChangedEvent(MqttApplicationMessage msg, IList<string> wildcardItem)

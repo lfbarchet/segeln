@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PuzzleCubes.Models;
 using UnityEngine.SceneManagement;
+using System;
 
 class ShipMovementController : MonoBehaviour
 {
@@ -28,6 +29,7 @@ class ShipMovementController : MonoBehaviour
 
     private void OnEnable()
     {
+        GameStateChangedEvent.Instance.AddListener(OnGameStateChanged);
         WheelStateChangedEvent.Instance.AddListener(OnWheelStateChanged);
         SailStateChangedEvent.Instance.AddListener(OnSailStateChanged);
         PerformanceEventStateChangedEvent.Instance.AddListener(OnPerformanceEventStateChanged);
@@ -35,6 +37,7 @@ class ShipMovementController : MonoBehaviour
 
     private void OnDisable()
     {
+        GameStateChangedEvent.Instance.RemoveListener(OnGameStateChanged);
         WheelStateChangedEvent.Instance.RemoveListener(OnWheelStateChanged);
         SailStateChangedEvent.Instance.RemoveListener(OnSailStateChanged);
         PerformanceEventStateChangedEvent.Instance.RemoveListener(OnPerformanceEventStateChanged);
@@ -50,6 +53,37 @@ class ShipMovementController : MonoBehaviour
     private void FixedUpdate()
     {
         characterController.Move(playerCube.forward * speed * SPEED_MULTIPLIER * Time.deltaTime);
+
+        if (GameManager.Instance.IsMainRole())
+        {
+            GameState gameState = new GameState()
+            {
+                Damage = RouteDistance.Instance.Damage,
+                ShipPositionX = playerCube.position.x,
+                ShipPositionY = playerCube.position.y,
+                ShipPositionZ = playerCube.position.z,
+                ShipRotationX = playerCube.rotation.eulerAngles.x,
+                ShipRotationY = playerCube.rotation.eulerAngles.y,
+                ShipRotationZ = playerCube.rotation.eulerAngles.z,
+                Timestamp = DateTime.Now
+            };
+            GameStateService.Instance.HandleGameStateChangeFromLocal(gameState);
+        }
+    }
+
+    private void OnGameStateChanged(GameState state)
+    {
+        if (GameManager.Instance.IsMainRole())
+        {
+            return;
+        }
+
+        Debug.Log($"Ship Position: {state.ShipPositionX}, {state.ShipPositionY}, {state.ShipPositionZ}, Time: {state.Timestamp}");
+
+        playerCube.position = new Vector3(state.ShipPositionX, state.ShipPositionY, state.ShipPositionZ);
+        playerCube.rotation = Quaternion.Euler(state.ShipRotationX, state.ShipRotationY, state.ShipRotationZ);
+
+        RouteDistance.Instance.Damage = state.Damage;
     }
 
     private void OnWheelStateChanged(WheelState state)

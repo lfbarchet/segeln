@@ -27,6 +27,22 @@ public class RouteDistance : MonoBehaviour
         }
     }
 
+
+
+    public static RouteDistance Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         foreach (Transform child in path)
@@ -37,16 +53,20 @@ public class RouteDistance : MonoBehaviour
 
     private void Update()
     {
-        smallestDistance = float.MaxValue;
-        nearestPathStroke = null;
-
-        foreach (Transform stroke in pathStrokes)
+        if (GameManager.Instance.IsMainRole())
         {
-            float distance = Vector3.Distance(ship.position, stroke.position);
-            if (distance < smallestDistance)
+
+            smallestDistance = float.MaxValue;
+            nearestPathStroke = null;
+
+            foreach (Transform stroke in pathStrokes)
             {
-                smallestDistance = distance;
-                nearestPathStroke = stroke.gameObject;
+                float distance = Vector3.Distance(ship.position, stroke.position);
+                if (distance < smallestDistance)
+                {
+                    smallestDistance = distance;
+                    nearestPathStroke = stroke.gameObject;
+                }
             }
         }
 

@@ -6,10 +6,14 @@ using UnityEngine.Events;
 
 
 
+
 public class WheelState
 {
     private float wheelOrientation;
     private float shipOrientation;
+
+    private GameState gameState;
+
     private DateTime timestamp;
 
     public float WheelOrientation { get => wheelOrientation; set => wheelOrientation = value; }
