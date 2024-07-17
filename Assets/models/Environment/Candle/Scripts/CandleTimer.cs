@@ -28,6 +28,5 @@ public class CandleTimer : MonoBehaviour
         }
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene(2);
-        // TO DO: Call Game Over
     }
 }
