@@ -33,6 +33,8 @@ public class SailController : MonoBehaviour
     private Quaternion sailStartRotation;
     private Vector3 gaugeStartPosition;
 
+    private readonly float DEATH_Y = -145;
+
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +58,13 @@ public class SailController : MonoBehaviour
     {
         if (GameManager.Instance.CubeRole != CubeRole.Sail || !GameManager.Instance.IsRunning)
             return;
+
+
+        if (ship.transform.position.y < DEATH_Y)
+        {
+            GameManager.Instance.GameOver();
+            return;
+        }
 
         gauge = CalculateGauge(speed);
         level = CalculateLevel(sailMovementSpeed);
