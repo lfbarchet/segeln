@@ -72,8 +72,10 @@ public class RouteDistance : MonoBehaviour
             Debug.DrawLine(ship.position, nearestPathStroke.transform.position, Color.red);
         }
 
+        var deathValue = GameManager.Instance.IsMainRole() ? 1000 : 990;
+
         // vor�bergehende Beispielausgaben, wenn man zu weit von der Route abweicht
-        if (Damage > 1000)
+        if (Damage > deathValue)
         {
             GameManager.Instance.GameOver();
         }
