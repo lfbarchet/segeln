@@ -68,6 +68,7 @@ public class RouteDistance : MonoBehaviour
                     nearestPathStroke = stroke.gameObject;
                 }
             }
+        Debug.DrawLine(ship.position, nearestPathStroke.transform.position, Color.red);
         }
 
         // vor�bergehende Beispielausgaben, wenn man zu weit von der Route abweicht
@@ -80,9 +81,5 @@ public class RouteDistance : MonoBehaviour
             Debug.Log("Du hast dich zu weit von der Route entfernt. Drehe um!");
             Damage += 0.1f;
         }
-
-
-        Debug.DrawLine(ship.position, nearestPathStroke.transform.position, Color.red);
     }
-
 }
