@@ -33,7 +33,7 @@ public class PerformanceEventService : MonoBehaviour
             PerformanceEventState performanceEventState
         )
     {
-        if (GameManager.Instance.IsMainRole())
+        if (GameManager.Instance.IsMainRole() && performanceEventState.IsStart)
         {
             print("Skip HandlePerformanceEventStateChangeFromServer, because this is the Main cube");
             return;

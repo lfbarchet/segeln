@@ -2094,7 +2094,7 @@ MonoBehaviour:
   gauge: 0.5
   gaugeTarget: 0.5
   targetChangeDelay: 3
-  speed: 0.0001
+  speed: 0.0002
   updateSpeed: 0.2
   sailMovementSpeed: 0.0005
   gaugeThreshold: 0.3
@@ -10098,7 +10098,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wheelOrientation: 0
-  wheelFactor: 0.175
+  wheelFactor: 0.3
   shipOrientation: 0
 --- !u!114 &2141035984
 MonoBehaviour:

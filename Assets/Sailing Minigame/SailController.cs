@@ -33,7 +33,7 @@ public class SailController : MonoBehaviour
     private Quaternion sailStartRotation;
     private Vector3 gaugeStartPosition;
 
-    private readonly float DEATH_Y = -145;
+    private readonly float DEATH_Y = -135;
 
 
     // Start is called before the first frame update
