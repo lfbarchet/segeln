@@ -102,4 +102,9 @@ public class GameManager : MonoBehaviour
         return cubeRole == CubeRole.Map;
     }
 
+    public bool isGameScene()
+    {
+        return SceneManager.GetActiveScene().buildIndex == 1;
+    }
+
 }

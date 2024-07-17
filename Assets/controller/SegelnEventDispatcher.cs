@@ -27,19 +27,29 @@ public class SegelnEventDispatcher : EventDispatcher
         Instance = this;
         base.Initialize();
 
-        subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(gameStateTopic).Build(), HandleGameStateEvent);
-        Debug.Log($"Subscribed to {gameStateTopic}");
 
-        subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(wheelStateTopic).Build(), HandleWheelStateChangedEvent);
-        Debug.Log($"Subscribed to {wheelStateTopic}");
 
-        subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(sailStateTopic).Build(), HandleSailStateChangedEvent);
-        Debug.Log($"Subscribed to {sailStateTopic}");
-
-        subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(performanceEventTopic).Build(), HandlePerformanceEventStateChangedEvent);
-        Debug.Log($"Subscribed to {performanceEventTopic}");
         subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(eventsTopic).Build(), HandleEventTriggeredEvent);
         Debug.Log($"Subscribed to {eventsTopic}");
+
+
+        if (GameManager.Instance.isGameScene())
+        {
+            subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(gameStateTopic).Build(), HandleGameStateEvent);
+            Debug.Log($"Subscribed to {gameStateTopic}");
+
+            subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(wheelStateTopic).Build(), HandleWheelStateChangedEvent);
+            Debug.Log($"Subscribed to {wheelStateTopic}");
+
+            subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(sailStateTopic).Build(), HandleSailStateChangedEvent);
+            Debug.Log($"Subscribed to {sailStateTopic}");
+
+
+
+            subscriptions.Add(new MqttTopicFilterBuilder().WithTopic(performanceEventTopic).Build(), HandlePerformanceEventStateChangedEvent);
+            Debug.Log($"Subscribed to {performanceEventTopic}");
+        }
+
     }
 
     public void HandleEventTriggeredEvent(MqttApplicationMessage msg, IList<string> wildcardItem)
