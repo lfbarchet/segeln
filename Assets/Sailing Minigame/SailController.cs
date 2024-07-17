@@ -60,7 +60,8 @@ public class SailController : MonoBehaviour
             return;
 
 
-        if (ship.transform.position.y < DEATH_Y)
+        var deathYValue = GameManager.Instance.IsMainRole() ? DEATH_Y : DEATH_Y - 10;
+        if (ship.transform.position.y < deathYValue)
         {
             GameManager.Instance.GameOver();
             return;

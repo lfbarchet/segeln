@@ -17,14 +17,14 @@ public class RouteDistance : MonoBehaviour
     public GameObject nearestPathStroke;
 
     public TextMeshProUGUI damageText;
-    private float damage = 0;
+    public float damage = 0;
     public float Damage
     {
         get => damage;
         set
         {
             damage = value;
-            damageText.text = "Damage: " + damage;
+            damageText.text = "Schaden: " + (int) damage;
         }
     }
 
