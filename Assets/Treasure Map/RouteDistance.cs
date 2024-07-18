@@ -24,7 +24,7 @@ public class RouteDistance : MonoBehaviour
         set
         {
             damage = value;
-            damageText.text = "Schaden: " + (int) damage;
+            damageText.text = "Leben: " + (int) (1000-damage);
         }
     }
 
