@@ -71,7 +71,7 @@ public class SailController : MonoBehaviour
         level = CalculateLevel(sailMovementSpeed);
 
         sail.transform.localRotation = sailStartRotation * Quaternion.AngleAxis((sailStartRotation.y - 30) + (60 * level), Vector3.forward);
-        gaugeIndicator.transform.localPosition = new Vector3((gaugeStartPosition.x - 4 + 8 * gauge), gaugeStartPosition.y, gaugeStartPosition.z);
+        gaugeIndicator.transform.localPosition = new Vector3((gaugeStartPosition.x + 4 - 8 * gauge), gaugeStartPosition.y, gaugeStartPosition.z);
 
         CalculateCurrentSpeed();
     }
