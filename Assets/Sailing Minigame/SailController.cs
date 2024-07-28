@@ -39,12 +39,12 @@ public class SailController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // if (GameManager.Instance.CubeRole != CubeRole.Sail)
-        //     return;
-
+        // Setup Start Parameters
         sailStartRotation = sail.transform.localRotation;
         gaugeStartPosition = gaugeIndicator.transform.localPosition;
         Debug.Log("Sail Start Rotation: " + sailStartRotation);
+
+        // Setup Coroutines
         coroutines = new List<IEnumerator>();
         coroutines.Add(NextGaugeTarget(targetChangeDelay));
         coroutines.Add(UpdateLevelTarget());
@@ -67,15 +67,19 @@ public class SailController : MonoBehaviour
             return;
         }
 
+        // Calculate current gauge and level values
         gauge = CalculateGauge(speed);
         level = CalculateLevel(sailMovementSpeed);
 
+        // Move sail and gauge indicator based on gauge and level values
         sail.transform.localRotation = sailStartRotation * Quaternion.AngleAxis((sailStartRotation.y - 30) + (60 * level), Vector3.forward);
         gaugeIndicator.transform.localPosition = new Vector3((gaugeStartPosition.x + 4 - 8 * gauge), gaugeStartPosition.y, gaugeStartPosition.z);
 
+        // Update ship speed
         CalculateCurrentSpeed();
     }
 
+    // Stop all coroutines on destruction of this game object.
     void OnDestroy()
     {
         if (GameManager.Instance.CubeRole != CubeRole.Sail || !GameManager.Instance.IsRunning)
@@ -85,6 +89,12 @@ public class SailController : MonoBehaviour
             StopCoroutine(coroutine);
     }
 
+    /** 
+        Calculate the current ship speed based on the alignemnt of level and gauge value.
+        If the end of the sail points to the gauge indicator, the ship has its maximum speed of 1.
+        Pointing away from the gauge indicator will continuously slow down the ship,
+        leading to the ship coming to halt when pointing too far away from the indicator.
+    */
     private void CalculateCurrentSpeed()
     {
         float levelToGaugeDiff = Mathf.Abs(gauge - level);
@@ -117,6 +127,10 @@ public class SailController : MonoBehaviour
         return newGauge;
     }
 
+    /**
+        Moves the sail closer to the level target.
+        This function serves as a smoothing mechanism for the rotation of the cube.
+    */
     private float CalculateLevel(float speed)
     {
         float newLevel = level;
@@ -133,21 +147,10 @@ public class SailController : MonoBehaviour
     // Adjust the current sail level based on cube orientation
     public void HandleOrientation(float orientation)
     {
-        float degrees = orientation + 180;
-        // if (lastOrientation == null)
-        //     lastOrientation = degrees;
-
-        // if (Mathf.Abs(lastOrientation-degrees) < 2)
-        // {
-        // lastOrientation = lastOrientation > 250 ? 360 : 0;
-        currentOrientation = degrees;
-        // } else
-        // lastOrientation = degrees;
-        // }
-        // level = lastOrientation/360;
+        currentOrientation = orientation + 180;
     }
 
-    // Choose a new target
+    // Choose a new gauge target
     private IEnumerator NextGaugeTarget(int delay)
     {
         while (true)
@@ -157,6 +160,7 @@ public class SailController : MonoBehaviour
         }
     }
 
+    //Update the level target based on the orientation difference within a time delta.
     private IEnumerator UpdateLevelTarget()
     {
         lastOrientation = currentOrientation;
@@ -189,12 +193,4 @@ public class SailController : MonoBehaviour
             yield return new WaitForSeconds(updateSpeed);
         }
     }
-
-    // private IEnumerator UpdateLevel(int updateSpeed)
-    // {
-    //     while(true){
-    //         level = ;
-    //         yield return new WaitForSeconds(updateSpeed);
-    //     }
-    // }
 }
